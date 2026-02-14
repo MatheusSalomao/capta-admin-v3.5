@@ -17,14 +17,13 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { TranslateModule } from '@ngx-translate/core';
 import { TablerIconsModule } from 'angular-tabler-icons';
-import { MaterialModule } from 'src/app/material.module';
+import { MaterialModule } from '@app/material.module';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-nav-item',
-  imports: [TranslateModule, TablerIconsModule, MaterialModule, CommonModule],
+  imports: [TablerIconsModule, MaterialModule, CommonModule],
   templateUrl: './nav-item.component.html',
   styleUrls: [],
   animations: [
@@ -61,6 +60,10 @@ export class AppNavItemComponent implements OnChanges {
   }
 
   onItemSelected(item: NavItem) {
+    if (item.external && item.route) {
+      window.open(item.route, '_blank', 'noopener');
+      return;
+    }
     if (!item.children || !item.children.length) {
       this.router.navigate([item.route]);
 

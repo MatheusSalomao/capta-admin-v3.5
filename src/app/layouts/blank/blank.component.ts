@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { CoreService } from 'src/app/services/core.service';
-import { AppSettings } from 'src/app/config';
+import { CoreService } from '@app/services/core.service';
+import { AppSettings } from '@app/config';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { MaterialModule } from 'src/app/material.module';
+import { MaterialModule } from '@app/material.module';
 
 @Component({
   selector: 'app-blank',

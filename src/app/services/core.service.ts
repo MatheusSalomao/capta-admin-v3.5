@@ -17,12 +17,4 @@ export class CoreService {
       ...options,
     }));
   }
-
-  setLanguage(lang: string) {
-    this.setOptions({ language: lang });
-  }
-
-  getLanguage() {
-    return this.getOptions().language;
-  }
 }

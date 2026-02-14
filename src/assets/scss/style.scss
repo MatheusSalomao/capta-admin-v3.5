@@ -16,8 +16,14 @@
 
 //container layout
 @use "layouts/transitions";
+@use "./helpers/color";
+@use "./helpers/border-color";
+@use "./helpers/icon-size";
 @use "container";
 @use "layouts/layouts";
+@use "./grid/grid";
+@use "./helpers/custom-flex";
+@use "./helpers";
 
 // horizontal
 @use "horizontal/horizontal";
@@ -26,8 +32,11 @@
 // apps
 @use "apps/calendar";
 @use "apps/email";
+@use "./apps/blogs";
+@use "./apps/chat";
 @use "apps/contact-list";
 @use "apps/kanban";
+@use "./apps/courses";
 @use "apps/todo";
 @use "apps/ecommerce";
 
@@ -35,6 +44,7 @@
 @use "pages/dashboards";
 @use "pages/landingpage";
 @use "pages/toast";
+@use "./pages/pricing";
 @use "pages/frontend";
 
 // RTL Theme

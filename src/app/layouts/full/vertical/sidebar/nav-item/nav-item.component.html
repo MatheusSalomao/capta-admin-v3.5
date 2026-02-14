@@ -11,7 +11,7 @@
     disabled: item.disabled
   }" class="menu-list-item">
   <span class="iconify routeIcon" matListItemIcon [attr.data-icon]="item.iconName"></span>
-  <span class="hide-menu">{{ item.displayName | translate }}</span>
+  <span class="hide-menu">{{ item.displayName }}</span>
   <div class="flex items-center gap-1">
     @if(item.children && item.children.length) {
     @if(item.chip) {
@@ -38,9 +38,9 @@
 <!-- external Link -->
 
 @if(!item.navCap && item.external) {
-<mat-list-item onClick="window.open('//google.com')" class="menu-list-item" target="_blank">
+<mat-list-item (click)="onItemSelected(item)" class="menu-list-item">
   <span class="iconify routeIcon" matListItemIcon [attr.data-icon]="item.iconName"></span>
-  <span class="hide-menu">{{ item.displayName | translate }}</span>
+  <span class="hide-menu">{{ item.displayName }}</span>
 </mat-list-item>
 }
 
