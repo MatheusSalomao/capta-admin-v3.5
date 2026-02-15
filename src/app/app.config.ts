@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { routes } from './app.routes';
 import {
   provideRouter,
@@ -27,6 +27,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 // code view
 import { provideHighlightOptions } from 'ngx-highlightjs';
 import 'highlight.js/styles/atom-one-dark.min.css';
+import { ApiAuthInterceptor, API_BASE_URL } from './api';
+import { environment } from '@/environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -42,6 +44,8 @@ export const appConfig: ApplicationConfig = {
         xml: () => import('highlight.js/lib/languages/xml'),
       },
     }),
+    { provide: API_BASE_URL, useValue: environment.apiBaseUrl },
+    { provide: HTTP_INTERCEPTORS, useClass: ApiAuthInterceptor, multi: true },
     provideRouter(
       routes,
       withInMemoryScrolling({
