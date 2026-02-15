@@ -4,7 +4,8 @@ import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '@app/material.module';
 import { BrandingComponent } from '@app/layouts/full/vertical/sidebar/branding.component';
 import { SessoesService } from '@app/api';
-import { finalize } from 'rxjs/operators';
+import { LocalStorageService } from '@app/services/local-storage.service';
+import { finalize, switchMap, tap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -14,6 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class LoginComponent {
   sessao = inject(SessoesService);
+  storage = inject(LocalStorageService);
   router = inject(Router);
   isSubmitting = false;
   authErrorMessage = '';
@@ -39,13 +41,20 @@ export class LoginComponent {
         senha: this.form.value.password as string,
       })
       .pipe(
+        tap(res => {
+          this.storage.setToken(res.token);
+        }),
+        switchMap(() => this.sessao.unidades()),
         finalize(() => {
           this.isSubmitting = false;
         })
       )
       .subscribe({
-        next: res => {
-          localStorage.setItem('api_token', res.token);
+        next: unidades => {
+          const primeiraUnidade = unidades[0];
+          if (primeiraUnidade) {
+            this.storage.setUnidade(primeiraUnidade);
+          }
           this.router.navigate(['/starter']);
         },
         error: (error: unknown) => {

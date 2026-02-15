@@ -26,8 +26,9 @@ export interface SessoesUnidadesGrupoGetResponse extends SessoesUnidadesBaseGetR
   kind: 'grupo';
 }
 
-export type SessoesUnidadesGetResponse =
+export type SessoesUnidadesGetResponse = Array<
   | SessoesUnidadesCampusGetResponse
   | SessoesUnidadesMantidaGetResponse
   | SessoesUnidadesMantenedoraGetResponse
-  | SessoesUnidadesGrupoGetResponse;
+  | SessoesUnidadesGrupoGetResponse
+>;

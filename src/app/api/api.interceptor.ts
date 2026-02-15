@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { LocalStorageService } from '@app/services/local-storage.service';
 
 @Injectable()
 export class ApiAuthInterceptor implements HttpInterceptor {
+  constructor(private storage: LocalStorageService) {}
+
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const rawToken = localStorage.getItem('api_token');
+    const rawToken = this.storage.getToken();
     if (!rawToken) {
       return this.handleErrors(next.handle(req));
     }
