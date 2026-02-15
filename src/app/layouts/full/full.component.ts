@@ -25,28 +25,26 @@ const MONITOR_VIEW = 'screen and (min-width: 1024px)';
 const BELOWMONITOR = 'screen and (max-width: 1023px)';
 
 @Component({
-    selector: 'app-full',
-    imports: [
-        RouterModule,
-        AppNavItemComponent,
-        MaterialModule,
-        CommonModule,
-        SidebarComponent,
-        NgScrollbarModule,
-        TablerIconsModule,
-        HeaderComponent,
-        AppHorizontalHeaderComponent,
-        AppHorizontalSidebarComponent,
-        AppBreadcrumbComponent,
-    ],
-    templateUrl: './full.component.html',
-  
-    encapsulation: ViewEncapsulation.None
+  selector: 'app-full',
+  imports: [
+    RouterModule,
+    AppNavItemComponent,
+    MaterialModule,
+    CommonModule,
+    SidebarComponent,
+    NgScrollbarModule,
+    TablerIconsModule,
+    HeaderComponent,
+    AppHorizontalHeaderComponent,
+    AppHorizontalSidebarComponent,
+    AppBreadcrumbComponent,
+  ],
+  templateUrl: './full.component.html',
+
+  encapsulation: ViewEncapsulation.None,
 })
 export class FullComponent implements OnInit {
   navItems = navItems;
-
-  
 
   @ViewChild('leftsidenav')
   public sidenav: MatSidenav;
@@ -77,7 +75,7 @@ export class FullComponent implements OnInit {
     this.htmlElement = document.querySelector('html')!;
     this.layoutChangesSubscription = this.breakpointObserver
       .observe([MOBILE_VIEW, TABLET_VIEW, MONITOR_VIEW, BELOWMONITOR])
-      .subscribe((state) => {
+      .subscribe(state => {
         // SidenavOpened must be reset true when layout changes
         this.options.sidenavOpened = true;
         this.isMobileScreen = state.breakpoints[BELOWMONITOR];
@@ -92,11 +90,9 @@ export class FullComponent implements OnInit {
     this.receiveOptions(this.options);
 
     // This is for scroll to top
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((e) => {
-        this.content.scrollTo({ top: 0 });
-      });
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(e => {
+      this.content.scrollTo({ top: 0 });
+    });
   }
 
   ngOnInit(): void {}
@@ -142,7 +138,7 @@ export class FullComponent implements OnInit {
 
   toggleColorsTheme(options: AppSettings) {
     // Remove any existing theme class dynamically
-    this.htmlElement.classList.forEach((className) => {
+    this.htmlElement.classList.forEach(className => {
       if (className.endsWith('_theme')) {
         this.htmlElement.classList.remove(className);
       }

@@ -1,22 +1,8 @@
-import {
-  Component,
-  HostBinding,
-  Input,
-  OnInit,
-  OnChanges,
-  Output,
-  EventEmitter,
-} from '@angular/core';
+import { Component, HostBinding, Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { NavItem } from './nav-item';
 import { Router } from '@angular/router';
 import { NavService } from '../../../../../services/nav.service';
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { MaterialModule } from '@app/material.module';
 import { CommonModule } from '@angular/common';
@@ -32,7 +18,7 @@ import { CommonModule } from '@angular/common';
       state('expanded', style({ transform: 'rotate(180deg)' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4,0.0,0.2,1)')),
     ]),
-  ]
+  ],
 })
 export class AppNavItemComponent implements OnChanges {
   @Output() toggleMobileLink: any = new EventEmitter<void>();
@@ -45,7 +31,10 @@ export class AppNavItemComponent implements OnChanges {
   @Input() item: NavItem | any;
   @Input() depth: any;
 
-  constructor(public navService: NavService, public router: Router) {
+  constructor(
+    public navService: NavService,
+    public router: Router
+  ) {
     if (this.depth === undefined) {
       this.depth = 0;
     }
@@ -66,7 +55,6 @@ export class AppNavItemComponent implements OnChanges {
     }
     if (!item.children || !item.children.length) {
       this.router.navigate([item.route]);
-
     }
     if (item.children && item.children.length) {
       this.expanded = !this.expanded;
@@ -98,9 +86,6 @@ export class AppNavItemComponent implements OnChanges {
 
   isChildActive(item: NavItem): boolean {
     if (!item.children) return false;
-    return item.children.some(
-      (child) => this.isDirectlyActive(child) || this.isChildActive(child)
-    );
+    return item.children.some(child => this.isDirectlyActive(child) || this.isChildActive(child));
   }
-
 }

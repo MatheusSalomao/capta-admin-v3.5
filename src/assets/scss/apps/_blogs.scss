@@ -14,7 +14,7 @@
 .featured-card {
   height: 400px;
   &:before {
-    content: "";
+    content: '';
     position: absolute;
     background: rgba(33, 33, 33, 0.6);
     top: 0;

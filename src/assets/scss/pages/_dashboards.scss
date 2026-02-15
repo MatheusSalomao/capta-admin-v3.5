@@ -1,4 +1,4 @@
-@use "../variables" as *;
+@use '../variables' as *;
 
 .order-status-table {
   table {
@@ -61,7 +61,6 @@
   .timeline-item {
     .point {
       .timeline-badge {
-
         &.border-primary {
           border: 2px solid var(--mat-sys-primary) !important;
         }
@@ -97,16 +96,15 @@
 }
 
 .laptop-desk .owl-item::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: 1;
-  background: linear-gradient(180deg, rgba(0, 0, 0, .2) 6.58%, rgba(0, 0, 0, 0) 37.62%, #000 80.7%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 6.58%, rgba(0, 0, 0, 0) 37.62%, #000 80.7%);
 }
-
 
 .laptop-desk .owl-theme .owl-dots {
   margin-top: 0 !important;
@@ -126,7 +124,7 @@
 
 // expansion panel
 
-html .mat-expansion-panel:not([class*="mat-elevation-z"]) {
+html .mat-expansion-panel:not([class*='mat-elevation-z']) {
   box-shadow: var(--mat-sys-level2);
 }
 
@@ -135,7 +133,6 @@ html .mat-expansion-panel:not([class*="mat-elevation-z"]) {
     clip-path: inset(0 0 5% 0 round 20px);
   }
 }
-
 
 // User Profile Tab
 .profileTabs {

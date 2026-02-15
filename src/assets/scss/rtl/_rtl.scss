@@ -1,7 +1,6 @@
-@use "../variables" as *;
+@use '../variables' as *;
 
-[dir="rtl"] {
-
+[dir='rtl'] {
   .mat-drawer.mat-drawer-end {
     transform: translate3d(0, 0, 0);
 
@@ -39,7 +38,6 @@
     }
 
     .sidebarNav {
-
       // sidebar
       .sidebar-list {
         .menu-list-item {

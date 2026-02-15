@@ -12,7 +12,7 @@ export class CoreService {
   }
 
   setOptions(options: Partial<AppSettings>) {
-    this.optionsSignal.update((current) => ({
+    this.optionsSignal.update(current => ({
       ...current,
       ...options,
     }));

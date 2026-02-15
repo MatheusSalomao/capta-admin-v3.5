@@ -1,17 +1,11 @@
 <div class="min-h-screen bg-(--mat-sys-background)">
   <div class="grid min-h-screen grid-cols-1 lg:grid-cols-12">
-    <section
-      class="relative col-span-7 hidden lg:flex flex-col bg-light-secondary"
-    >
+    <section class="relative col-span-7 hidden lg:flex flex-col bg-light-secondary">
       <div class="p-10 lg:p-20">
         <app-branding></app-branding>
       </div>
       <div class="flex flex-1 items-center justify-center px-10 pb-10">
-        <img
-          src="/assets/images/backgrounds/login-bg.svg"
-          alt="login"
-          class="max-w-130 w-full"
-        />
+        <img src="/assets/images/backgrounds/login-bg.svg" alt="login" class="max-w-130 w-full" />
       </div>
     </section>
 
@@ -19,37 +13,27 @@
       <app-branding></app-branding>
     </div>
 
-    <section
-      class="col-span-5 flex lg:items-center justify-center px-6 py-12 lg:px-12"
-    >
+    <section class="col-span-5 flex lg:items-center justify-center px-6 py-12 lg:px-12">
       <div class="w-full max-w-md">
-        <h4 class="text-2xl font-semibold text-(--mat-sys-on-background)">
-          Capta
-        </h4>
-        <span class="mt-2 block text-sm text-(--mat-sys-on-surface-variant)">
-          Gestão de Captação
-        </span>
+        <h4 class="text-2xl font-semibold text-(--mat-sys-on-background)">Capta</h4>
+        <span class="mt-2 block text-sm text-(--mat-sys-on-surface-variant)"> Gestão de Captação </span>
 
         <form class="mt-8 space-y-5" [formGroup]="form" (ngSubmit)="submit()">
           @if (authErrorMessage) {
-            <div
-              class="rounded-md border border-error/40 bg-error/10 px-4 py-3 text-sm text-error"
-            >
+            <div class="rounded-md border border-error/40 bg-error/10 px-4 py-3 text-sm text-error">
               {{ authErrorMessage }}
             </div>
           }
           <div>
-            <mat-label class="text-sm font-semibold mb-2 block"
-              >Email</mat-label
-            >
+            <mat-label class="text-sm font-semibold mb-2 block">Email</mat-label>
             <mat-form-field appearance="outline" class="w-full" color="primary">
               <input matInput formControlName="email" />
-              @if (f["email"].touched && f["email"].invalid) {
+              @if (f['email'].touched && f['email'].invalid) {
                 <mat-hint class="error-msg">
-                  @if (f["email"].errors && f["email"].errors["required"]) {
+                  @if (f['email'].errors && f['email'].errors['required']) {
                     <div class="text-error">E-mail é obrigatório.</div>
                   }
-                  @if (f["email"].errors && f["email"].errors["minlength"]) {
+                  @if (f['email'].errors && f['email'].errors['minlength']) {
                     <div class="text-error">E-mail inválido.</div>
                   }
                 </mat-hint>
@@ -58,16 +42,12 @@
           </div>
 
           <div>
-            <mat-label class="text-sm font-semibold mb-2 block"
-              >Senha</mat-label
-            >
+            <mat-label class="text-sm font-semibold mb-2 block">Senha</mat-label>
             <mat-form-field appearance="outline" class="w-full" color="primary">
               <input matInput type="password" formControlName="password" />
-              @if (f["password"].touched && f["password"].invalid) {
+              @if (f['password'].touched && f['password'].invalid) {
                 <mat-hint class="error-msg">
-                  @if (
-                    f["password"].errors && f["password"].errors["required"]
-                  ) {
+                  @if (f['password'].errors && f['password'].errors['required']) {
                     <div class="text-error">Senha é obrigatória.</div>
                   }
                 </mat-hint>
@@ -75,23 +55,12 @@
             </mat-form-field>
           </div>
 
-          <button
-            mat-flat-button
-            color="primary"
-            class="w-full"
-            [disabled]="!form.valid || isSubmitting"
-          >
+          <button mat-flat-button color="primary" class="w-full" [disabled]="!form.valid || isSubmitting">
             <span class="inline-flex items-center justify-center gap-2">
               @if (isSubmitting) {
-                <mat-progress-spinner
-                  diameter="18"
-                  mode="indeterminate"
-                  color="accent"
-                ></mat-progress-spinner>
+                <mat-progress-spinner diameter="18" mode="indeterminate" color="accent"></mat-progress-spinner>
               }
-              <span class="ml-2">{{
-                isSubmitting ? "Entrando..." : "Entrar"
-              }}</span>
+              <span class="ml-2">{{ isSubmitting ? 'Entrando...' : 'Entrar' }}</span>
             </span>
           </button>
         </form>

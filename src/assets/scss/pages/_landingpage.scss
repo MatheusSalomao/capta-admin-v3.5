@@ -1,4 +1,4 @@
-@use "../variables" as *;
+@use '../variables' as *;
 
 .img-overlay {
   position: relative;
@@ -10,7 +10,7 @@
 
   &:hover {
     &:before {
-      content: "";
+      content: '';
       position: absolute;
       top: 0;
       left: 0;
@@ -34,12 +34,9 @@
   }
 }
 
-
 // ----------------------------------------------------------
 // banner
 // ----------------------------------------------------------
-
-
 
 .slider-img {
   animation: slideup 35s linear infinite;
@@ -69,10 +66,8 @@
   }
 }
 
-
 // demo slider
 .demo-slider {
-
   .demo-slide {
     animation: slide 45s linear infinite;
   }

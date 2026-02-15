@@ -12,14 +12,14 @@
 
     <span class="flex-1"></span>
 
-    @if(options.theme=='light'){
-    <button mat-icon-button aria-label="lightdark" class="flex justify-center" (click)="setlightDark('dark')">
-      <i-tabler class="flex" [name]="'moon'"></i-tabler>
-    </button>
-    }@else{
-    <button mat-icon-button aria-label="lightdark" class="flex justify-center" (click)="setlightDark('light')">
-      <i-tabler class="flex" [name]="'sun'"></i-tabler>
-    </button>
+    @if (options.theme == 'light') {
+      <button mat-icon-button aria-label="lightdark" class="flex justify-center" (click)="setlightDark('dark')">
+        <i-tabler class="flex" [name]="'moon'"></i-tabler>
+      </button>
+    } @else {
+      <button mat-icon-button aria-label="lightdark" class="flex justify-center" (click)="setlightDark('light')">
+        <i-tabler class="flex" [name]="'sun'"></i-tabler>
+      </button>
     }
   </div>
 </mat-toolbar>

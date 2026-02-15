@@ -39,7 +39,7 @@ export class BlankComponent {
 
   toggleColorsTheme(options: AppSettings) {
     // Remove any existing theme class dynamically
-    this.htmlElement.classList.forEach((className) => {
+    this.htmlElement.classList.forEach(className => {
       if (className.endsWith('_theme')) {
         this.htmlElement.classList.remove(className);
       }

@@ -1,6 +1,6 @@
-import {InjectionToken} from '@angular/core';
-import {HttpParams} from '@angular/common/http';
-import {environment} from "@/environments/environment";
+import { InjectionToken } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
+import { environment } from '@/environments/environment';
 
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 

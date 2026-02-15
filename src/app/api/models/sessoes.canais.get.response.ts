@@ -7,7 +7,6 @@ export interface SessoesCanaisGetResponse {
   balcao: boolean;
 }
 
-
 // {
 //   "id": 1,
 //   "uid": "0192888a-d93f-758b-81dc-74180a957dfd",

@@ -1,8 +1,10 @@
-@use "sass:map";
-@use "@angular/material" as mat;
-@use "../variables" as *;
+@use 'sass:map';
+@use '@angular/material' as mat;
+@use '../variables' as *;
 
-@include mat.button-overrides((protected-hover-container-elevation-shadow: var(--mat-sys-level1),
+@include mat.button-overrides(
+  (
+    protected-hover-container-elevation-shadow: var(--mat-sys-level1),
     filled-horizontal-padding: 15px,
     outlined-horizontal-padding: 15px,
     protected-horizontal-padding: 15px,
@@ -11,14 +13,17 @@
     outlined-container-shape: var(--mat-sys-corner-small),
     protected-container-shape: var(--mat-sys-corner-small),
     text-container-shape: var(--mat-sys-corner-small),
-  ));
+  )
+);
 
-@include mat.icon-button-overrides((icon-color: $text-color,
-  ));
+@include mat.icon-button-overrides(
+  (
+    icon-color: $text-color,
+  )
+);
 
 // styles
 html {
-
   .mat-mdc-button-base.bg-light-primary:hover,
   .mat-mdc-button-base.bg-light-secondary:hover,
   .mat-mdc-button-base.bg-light-error:hover,

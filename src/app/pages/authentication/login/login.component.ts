@@ -1,11 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '@app/material.module';
 import { BrandingComponent } from '@app/layouts/full/vertical/sidebar/branding.component';
@@ -15,13 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
-  imports: [
-    RouterModule,
-    MaterialModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrandingComponent,
-  ],
+  imports: [RouterModule, MaterialModule, FormsModule, ReactiveFormsModule, BrandingComponent],
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
@@ -32,10 +20,7 @@ export class LoginComponent {
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    password: new FormControl('', [
-      Validators.required,
-      Validators.minLength(8),
-    ]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
   });
 
   get f() {
@@ -56,10 +41,10 @@ export class LoginComponent {
       .pipe(
         finalize(() => {
           this.isSubmitting = false;
-        }),
+        })
       )
       .subscribe({
-        next: (res) => {
+        next: res => {
           localStorage.setItem('api_token', res.token);
           this.router.navigate(['/starter']);
         },

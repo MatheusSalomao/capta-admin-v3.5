@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ChangeDetectorRef,
-  OnChanges,
-} from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, OnChanges } from '@angular/core';
 import { navItems } from './sidebar-data';
 import { Router } from '@angular/router';
 import { NavService } from '../../../../services/nav.service';
@@ -33,9 +27,7 @@ export class AppHorizontalSidebarComponent implements OnInit {
     this.mobileQuery = media.matchMedia('(min-width: 1100px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-    this.router.events.subscribe(
-      () => (this.parentActive = this.router.url.split('/')[1])
-    );
+    this.router.events.subscribe(() => (this.parentActive = this.router.url.split('/')[1]));
   }
 
   ngOnInit(): void {

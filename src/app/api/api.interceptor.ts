@@ -34,18 +34,16 @@ export class ApiAuthInterceptor implements HttpInterceptor {
               (error as { message?: string }).message = 'Sem autorização para esta ação.';
               break;
             case 422:
-              (error as { message?: string }).message =
-                'Dados inválidos. Verifique os campos enviados.';
+              (error as { message?: string }).message = 'Dados inválidos. Verifique os campos enviados.';
               break;
             default:
               if (error.status >= 500) {
-                (error as { message?: string }).message =
-                  'Erro interno do servidor. Tente novamente mais tarde.';
+                (error as { message?: string }).message = 'Erro interno do servidor. Tente novamente mais tarde.';
               }
           }
         }
         return throwError(() => error);
-      }),
+      })
     );
   }
 }

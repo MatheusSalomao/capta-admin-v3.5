@@ -60,8 +60,8 @@ export const navItems: NavItem[] = [
         displayName: 'Contact',
         iconName: 'tabler:point',
         route: 'front-pages/contact',
-      }
-    ]
+      },
+    ],
   },
   {
     displayName: 'Apps',

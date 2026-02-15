@@ -1,7 +1,6 @@
-@use "../variables" as *;
+@use '../variables' as *;
 
 .ngx-pagination {
-
   .current {
     background: var(--mat-sys-primary) !important;
     border-radius: $border-radius;
@@ -31,6 +30,5 @@
       left: 0;
       background: $white;
     }
-
   }
 }

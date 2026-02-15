@@ -1,4 +1,4 @@
-@use "../variables" as *;
+@use '../variables' as *;
 
 .new-request,
 .in-progress,
@@ -25,5 +25,5 @@
 }
 
 .cdk-drop-list {
-  padding: 0px 0px 20px 0px !important
+  padding: 0px 0px 20px 0px !important;
 }

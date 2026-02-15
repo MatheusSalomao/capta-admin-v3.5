@@ -1,4 +1,4 @@
-@use "variables" as *;
+@use 'variables' as *;
 
 *,
 :after,
@@ -63,7 +63,6 @@ a {
 }
 
 .filter-sidebar {
-
   &.open {
     right: 0;
   }
@@ -78,12 +77,12 @@ td.hljs-ln-line.hljs-ln-numbers {
   padding-right: 10px;
 }
 
-.mat-drawer[style*="visibility: hidden"] {
+.mat-drawer[style*='visibility: hidden'] {
   display: none;
 }
 
-.ng-scroll-viewport[_nghost-ng-c2407083653]>.ng-scroll-content[_ngcontent-ng-c2407083653],
-.ng-scrollbar-external-viewport[_nghost-ng-c2407083653] .ng-scroll-viewport>.ng-scroll-content {
+.ng-scroll-viewport[_nghost-ng-c2407083653] > .ng-scroll-content[_ngcontent-ng-c2407083653],
+.ng-scrollbar-external-viewport[_nghost-ng-c2407083653] .ng-scroll-viewport > .ng-scroll-content {
   width: 100% !important;
 }
 
@@ -102,7 +101,6 @@ td.hljs-ln-line.hljs-ln-numbers {
 }
 
 /* Wrapper to align all items vertically */
-
 
 /* Base animation */
 .stat-item,

@@ -1,4 +1,4 @@
-@use "../variables" as *;
+@use '../variables' as *;
 
 .sidebarNav-horizontal {
   .childBox {
@@ -7,7 +7,6 @@
 
   // header
   .horizontal-topbar {
-
     .branding {
       padding-left: 0;
     }
@@ -45,16 +44,16 @@
         position: static;
 
         &:hover {
-          >.childBox>.ddmenu {
+          > .childBox > .ddmenu {
             display: inline-block;
           }
         }
 
-        >.childBox {
+        > .childBox {
           width: 100%;
           left: 0;
 
-          >.ddmenu {
+          > .ddmenu {
             width: 24%;
           }
         }
@@ -62,15 +61,15 @@
 
       &.two-column {
         &:hover {
-          >.childBox>.ddmenu {
+          > .childBox > .ddmenu {
             display: inline-block;
           }
         }
 
-        >.childBox {
+        > .childBox {
           width: 600px;
 
-          >.ddmenu {
+          > .ddmenu {
             width: 49%;
             border-radius: $border-radius;
           }
@@ -87,11 +86,11 @@
         font-size: 14px;
       }
 
-      &:hover>.menuLink {
+      &:hover > .menuLink {
         background-color: var(--mat-sys-surface-bright);
       }
 
-      &:hover>.activeMenu,
+      &:hover > .activeMenu,
       .activeMenu {
         color: $white !important;
         background-color: var(--mat-sys-primary);
@@ -119,34 +118,34 @@
         }
       }
 
-      &:hover>.childBox>.ddmenu:hover {
+      &:hover > .childBox > .ddmenu:hover {
         background-color: var(--mat-sys-surface-bright);
 
-        &:hover>.childBox>.ddmenu:hover {
+        &:hover > .childBox > .ddmenu:hover {
           background-color: var(--mat-sys-surface-bright);
         }
       }
 
-      &:hover>.childBox>.ddmenu:hover>.childBox {
+      &:hover > .childBox > .ddmenu:hover > .childBox {
         left: 230px;
         top: 0px;
         z-index: 9;
 
-        >.ddmenu:hover>.childBox {
+        > .ddmenu:hover > .childBox {
           left: 235px;
           top: 0;
         }
       }
 
-      &:hover>.childBox>.ddmenu {
+      &:hover > .childBox > .ddmenu {
         display: block;
         padding: 0;
 
-        &:hover>.childBox>.ddmenu {
+        &:hover > .childBox > .ddmenu {
           display: block;
           padding: 0;
 
-          &:hover>.childBox>.ddmenu {
+          &:hover > .childBox > .ddmenu {
             display: block;
             padding: 0;
           }
@@ -157,7 +156,6 @@
 }
 
 .sidebarNav-horizontal {
-
   .topbar,
   .mainWrapper {
     width: 100%;
@@ -165,10 +163,9 @@
 
   .horizontal-navbar {
     .parentBox {
-
-      &.pactive>a,
-      &.pactive>a:hover,
-      &.pactive:hover>a {
+      &.pactive > a,
+      &.pactive > a:hover,
+      &.pactive:hover > a {
         background-color: var(--mat-sys-primary);
         color: $white !important;
         border-radius: $border-radius;
@@ -181,12 +178,12 @@
   .sidebarNav-horizontal {
     .horizontal-navbar {
       .parentBox {
-        &:last-child:hover>.childBox>.ddmenu {
-          &:hover>.childBox {
+        &:last-child:hover > .childBox > .ddmenu {
+          &:hover > .childBox {
             right: 250px;
             left: unset;
 
-            >.ddmenu:hover>.childBox {
+            > .ddmenu:hover > .childBox {
               right: 250px;
               left: unset;
             }
@@ -201,12 +198,12 @@
   .sidebarNav-horizontal {
     .horizontal-navbar {
       .parentBox {
-        &:last-child:hover>.childBox>.ddmenu {
-          &:hover>.childBox {
+        &:last-child:hover > .childBox > .ddmenu {
+          &:hover > .childBox {
             left: 250px;
             right: unset;
 
-            >.ddmenu:hover>.childBox {
+            > .ddmenu:hover > .childBox {
               left: 250px;
               right: unset;
             }

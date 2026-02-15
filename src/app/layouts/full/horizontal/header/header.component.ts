@@ -6,9 +6,9 @@ import { BrandingComponent } from '../../vertical/sidebar/branding.component';
 import { AppSettings } from '@app/config';
 
 @Component({
-    selector: 'app-horizontal-header',
-    imports: [TablerIconsModule, MaterialModule, BrandingComponent],
-    templateUrl: './header.component.html'
+  selector: 'app-horizontal-header',
+  imports: [TablerIconsModule, MaterialModule, BrandingComponent],
+  templateUrl: './header.component.html',
 })
 export class AppHorizontalHeaderComponent {
   @Input() showToggle = true;
@@ -21,9 +21,7 @@ export class AppHorizontalHeaderComponent {
 
   @Output() optionsChange = new EventEmitter<AppSettings>();
 
-  constructor(
-    private settings: CoreService
-  ) {}
+  constructor(private settings: CoreService) {}
 
   options = this.settings.getOptions();
 

@@ -1,4 +1,4 @@
-@use "../variables" as *;
+@use '../variables' as *;
 
 .mat-drawer.sidebarNav {
   width: $sidenav-desktop;
@@ -121,7 +121,6 @@
       margin-bottom: 2px;
 
       &:hover {
-
         &::before {
           background-color: var(--mat-sys-primary-fixed-dim);
           color: var(--mat-sys-primary);

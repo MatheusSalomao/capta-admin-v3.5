@@ -9,7 +9,7 @@ import { TablerIconsModule } from 'angular-tabler-icons';
   selector: 'app-breadcrumb',
   imports: [RouterModule, TablerIconsModule],
   templateUrl: './breadcrumb.component.html',
-  styleUrls: []
+  styleUrls: [],
 })
 export class AppBreadcrumbComponent {
   // @Input() layout;
@@ -21,20 +21,20 @@ export class AppBreadcrumbComponent {
     private titleService: Title
   ) {
     this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
+      .pipe(filter(event => event instanceof NavigationEnd))
       .pipe(map(() => this.activatedRoute))
       .pipe(
-        map((route) => {
+        map(route => {
           while (route.firstChild) {
             route = route.firstChild;
           }
           return route;
         })
       )
-      .pipe(filter((route) => route.outlet === 'primary'))
-      .pipe(mergeMap((route) => route.data))
+      .pipe(filter(route => route.outlet === 'primary'))
+      .pipe(mergeMap(route => route.data))
       // tslint:disable-next-line - Disables all
-      .subscribe((event) => {
+      .subscribe(event => {
         // tslint:disable-next-line - Disables all
         this.titleService.setTitle(event['title'] + ' - Angular 21');
         this.pageInfo = event;

@@ -1,4 +1,4 @@
-@use "../variables" as *;
+@use '../variables' as *;
 
 .cal-event-action {
   text-decoration: none;
@@ -37,7 +37,6 @@
 }
 
 html {
-
   .cal-week-view,
   .cal-week-view .cal-hour-odd {
     background-color: var(--mat-sys-surface);

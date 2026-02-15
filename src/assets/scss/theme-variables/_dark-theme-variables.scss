@@ -1,4 +1,4 @@
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
 
 html.dark-theme {
   color-scheme: dark;
@@ -21,12 +21,18 @@ html.dark-theme {
   --mat-stepper-header-focus-state-layer-color: #19212a;
   --mat-stepper-header-hover-state-layer-color: #19212a;
   --mat-expansion-header-hover-state-layer-color: #19212a;
-  @include mat.card-overrides((elevated-container-color: #1c2536,
+  @include mat.card-overrides(
+    (
+      elevated-container-color: #1c2536,
       elevated-container-elevation: '#919eab4d 0px 0px 2px 0px,#919eab05 0px 12px 24px -4px',
       subtitle-text-color: rgba(255, 255, 255, 0.67),
-    ));
-  @include mat.theme-overrides((level1: '#919eab4d 0px 0px 2px 0px,#919eab05 0px 12px 24px -4px',
+    )
+  );
+  @include mat.theme-overrides(
+    (
+      level1: '#919eab4d 0px 0px 2px 0px,#919eab05 0px 12px 24px -4px',
       level2: '#919eab4d 0px 0px 2px 0px,#919eab05 0px 12px 24px -4px',
       level3: '#919eab4d 0px 0px 2px 0px,#919eab05 0px 12px 24px -4px',
-    ));
+    )
+  );
 }

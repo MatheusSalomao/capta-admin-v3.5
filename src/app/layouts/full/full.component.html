@@ -1,50 +1,57 @@
 <span [dir]="options.dir!">
-  <mat-sidenav-container class="mainWrapper" autosize autoFocus [ngClass]="{
-      'sidebarNav-mini':
-        options.sidenavCollapsed && options.navPos !== 'top' && !resView,
+  <mat-sidenav-container
+    class="mainWrapper"
+    autosize
+    autoFocus
+    [ngClass]="{
+      'sidebarNav-mini': options.sidenavCollapsed && options.navPos !== 'top' && !resView,
       'sidebarNav-horizontal': options.horizontal,
-      cardBorder: options.cardBorder
+      cardBorder: options.cardBorder,
     }">
     <!-- ============================================================== -->
     <!-- Vertical Sidebar -->
     <!-- ============================================================== -->
     @if (!options.horizontal) {
-    <mat-sidenav #leftsidenav [mode]="isOver ? 'over' : 'side'" [opened]="
-        options.navPos === 'side' &&
-        options.sidenavOpened &&
-        !isOver &&
-        !resView
-      " (openedChange)="onSidenavOpenedChange($event)" (closedStart)="onSidenavClosedStart()" class="sidebarNav">
-      <div class="flex-layout flex flex-col h-full">
-        <app-sidebar (toggleMobileNav)="sidenav.toggle()" [showToggle]="isOver"></app-sidebar>
-        <ng-scrollbar class="relative" style="height: 100%">
-          <mat-nav-list class="sidebar-list">
-            @for(item of navItems; track item) {
-            <app-nav-item [item]="item" (notify)="sidenav.toggle()" class="top-parent">
-            </app-nav-item>
-            }
-          </mat-nav-list>
-        </ng-scrollbar>
-      </div>
-    </mat-sidenav>
+      <mat-sidenav
+        #leftsidenav
+        [mode]="isOver ? 'over' : 'side'"
+        [opened]="options.navPos === 'side' && options.sidenavOpened && !isOver && !resView"
+        (openedChange)="onSidenavOpenedChange($event)"
+        (closedStart)="onSidenavClosedStart()"
+        class="sidebarNav">
+        <div class="flex-layout flex flex-col h-full">
+          <app-sidebar (toggleMobileNav)="sidenav.toggle()" [showToggle]="isOver"></app-sidebar>
+          <ng-scrollbar class="relative" style="height: 100%">
+            <mat-nav-list class="sidebar-list">
+              @for (item of navItems; track item) {
+                <app-nav-item [item]="item" (notify)="sidenav.toggle()" class="top-parent"> </app-nav-item>
+              }
+            </mat-nav-list>
+          </ng-scrollbar>
+        </div>
+      </mat-sidenav>
     }
 
     <!-- ============================================================== -->
     <!-- horizontal Sidebar -->
     <!-- ============================================================== -->
     @if (resView) {
-    <mat-sidenav #leftsidenav [mode]="'over'" [opened]="options.sidenavOpened && !isTablet"
-      (openedChange)="onSidenavOpenedChange($event)" (closedStart)="onSidenavClosedStart()" class="sidebarNav">
-      <app-sidebar> </app-sidebar>
-      <ng-scrollbar class="relative" style="height: 100%">
-        <mat-nav-list class="sidebar-list">
-          @for(item of navItems; track item) {
-          <app-nav-item [item]="item" (notify)="sidenav.toggle()">
-          </app-nav-item>
-          }
-        </mat-nav-list>
-      </ng-scrollbar>
-    </mat-sidenav>
+      <mat-sidenav
+        #leftsidenav
+        [mode]="'over'"
+        [opened]="options.sidenavOpened && !isTablet"
+        (openedChange)="onSidenavOpenedChange($event)"
+        (closedStart)="onSidenavClosedStart()"
+        class="sidebarNav">
+        <app-sidebar> </app-sidebar>
+        <ng-scrollbar class="relative" style="height: 100%">
+          <mat-nav-list class="sidebar-list">
+            @for (item of navItems; track item) {
+              <app-nav-item [item]="item" (notify)="sidenav.toggle()"> </app-nav-item>
+            }
+          </mat-nav-list>
+        </ng-scrollbar>
+      </mat-sidenav>
     }
 
     <!-- ============================================================== -->
@@ -55,18 +62,25 @@
       <!-- VerticalHeader -->
       <!-- ============================================================== -->
       @if (!options.horizontal) {
-      <app-header [showToggle]="!isOver" (toggleCollapsed)="toggleCollapsed()" (toggleMobileNav)="sidenav.toggle()"
-        (optionsChange)="receiveOptions($event)"></app-header>
+        <app-header
+          [showToggle]="!isOver"
+          (toggleCollapsed)="toggleCollapsed()"
+          (toggleMobileNav)="sidenav.toggle()"
+          (optionsChange)="receiveOptions($event)"></app-header>
       } @else {
-      <!-- horizontal header -->
-      <app-horizontal-header (toggleMobileNav)="sidenav.toggle()"
-        (optionsChange)="receiveOptions($event)"></app-horizontal-header>
-      } @if(options.horizontal) {
-      <app-horizontal-sidebar></app-horizontal-sidebar>
+        <!-- horizontal header -->
+        <app-horizontal-header
+          (toggleMobileNav)="sidenav.toggle()"
+          (optionsChange)="receiveOptions($event)"></app-horizontal-header>
+      }
+      @if (options.horizontal) {
+        <app-horizontal-sidebar></app-horizontal-sidebar>
       }
 
-      <main class="pageWrapper" [ngClass]="{
-          maxWidth: options.boxed
+      <main
+        class="pageWrapper"
+        [ngClass]="{
+          maxWidth: options.boxed,
         }">
         <app-breadcrumb></app-breadcrumb>
         <!-- ============================================================== -->
@@ -74,8 +88,6 @@
         <!-- ============================================================== -->
         <router-outlet></router-outlet>
       </main>
-
     </mat-sidenav-content>
-
   </mat-sidenav-container>
 </span>
