@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
-import { CanActivateChildFn, Router } from '@angular/router';
+import { CanMatchFn, Router } from '@angular/router';
 import { LocalStorageService } from '@app/services/local-storage.service';
 import { isTokenActive } from './auth.utils';
 
-export const authGuard: CanActivateChildFn = () => {
+export const authGuard: CanMatchFn = () => {
   const router = inject(Router);
   const storage = inject(LocalStorageService);
   const token = storage.getToken();

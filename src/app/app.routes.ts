@@ -8,7 +8,7 @@ export const routes: Routes = [
   {
     path: '',
     component: BlankComponent,
-    canActivateChild: [publicGuard],
+    canMatch: [publicGuard],
     children: [
       {
         path: '',
@@ -19,21 +19,21 @@ export const routes: Routes = [
   {
     path: '',
     component: FullComponent,
-    canActivateChild: [authGuard],
+    canMatch: [authGuard],
     children: [
       {
         path: '',
-        redirectTo: '/starter',
+        redirectTo: '/dashboard',
         pathMatch: 'full',
       },
       {
-        path: 'starter',
+        path: 'dashboard',
         loadChildren: () => import('./pages/pages.routes').then(m => m.PagesRoutes),
       },
     ],
   },
   {
     path: '**',
-    redirectTo: 'error',
+    redirectTo: '/error',
   },
 ];

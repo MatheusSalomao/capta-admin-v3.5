@@ -5,8 +5,8 @@ export const navItems: NavItem[] = [
     navCap: 'Home',
   },
   {
-    displayName: 'Starter',
+    displayName: 'Dashboard',
     iconName: 'solar:home-angle-line-duotone',
-    route: '/starter',
+    route: '/dashboard',
   },
 ];

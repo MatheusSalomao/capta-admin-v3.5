@@ -55,7 +55,7 @@ export class LoginComponent {
           if (primeiraUnidade) {
             this.storage.setUnidade(primeiraUnidade);
           }
-          this.router.navigate(['/starter']);
+          this.router.navigate(['/dashboard']);
         },
         error: (error: unknown) => {
           this.authErrorMessage = this.resolveAuthErrorMessage(error);
