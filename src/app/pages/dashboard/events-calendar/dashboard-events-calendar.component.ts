@@ -45,23 +45,27 @@ export class DashboardEventsCalendarComponent {
   readonly activeDayIsOpen = signal<boolean>(false);
   readonly refresh = new Subject<void>();
 
-  readonly calendarEvents = computed<CalendarEvent[]>(() =>
-    this.events().map(event => {
-      const localDate = this.toLocalDate(event.date);
-      return {
-        id: event.key,
-        title: this.formatEventTitle(event),
-        start: localDate,
-        allDay: !this.hasTimeValue(event.date),
-        color: event.color || calendarColors,
-      };
-    }),
+  readonly calendarEvents = computed<CalendarEvent[]>(
+    () =>
+      this.events()
+        .map(event => {
+          const localDate = this.toLocalDate(event.date);
+          return {
+            id: event.key,
+            title: this.formatEventTitle(event),
+            start: localDate,
+            allDay: !this.hasTimeValue(event.date),
+            color: event.color || calendarColors,
+          };
+        })
+        .sort((left, right) => left.start.getTime() - right.start.getTime()) as CalendarEvent[]
   );
 
   readonly viewTitle = computed(() => {
-    const format = this.view() === CalendarView.Month ? 'MMMM y' : 'MMMM y';
-    const value = formatDate(this.viewDate(), format, 'pt-BR');
-    return this.capitalize(value);
+    const value = formatDate(this.viewDate(), `MMMM y`, 'pt-BR');
+    const [mes, ano] = value.split(' ');
+
+    return this.capitalize(`${mes} de ${ano}`);
   });
 
   readonly triggerRefresh = effect(() => {
@@ -123,9 +127,9 @@ export class DashboardEventsCalendarComponent {
       return event.title;
     }
 
-    const time = new Date(event.date).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' } );
+    const time = new Date(event.date).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
 
-    return `${event.title} ${time} - ${description}`;
+    return `${event.title} ${time} - ${description}`.trim();
   }
 
   private capitalize(value: string): string {

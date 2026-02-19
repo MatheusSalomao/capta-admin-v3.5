@@ -31,6 +31,7 @@
     @switch (view()) {
       @case (viewMonth) {
         <mwl-calendar-month-view
+          [weekStartsOn]="1"
           [viewDate]="viewDate()"
           [events]="calendarEvents()"
           [refresh]="refresh"
@@ -41,6 +42,7 @@
       }
       @case (viewWeek) {
         <mwl-calendar-week-view
+          [weekStartsOn]="1"
           [viewDate]="viewDate()"
           [events]="calendarEvents()"
           [refresh]="refresh"
