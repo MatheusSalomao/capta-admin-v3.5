@@ -12,7 +12,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('./pages/authentication/authentication.routes').then(m => m.AuthenticationRoutes),
+        loadChildren: () => import('./pages/authentication/routes').then(m => m.children),
       },
     ],
   },
@@ -23,12 +23,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/dashboard',
-        pathMatch: 'full',
-      },
-      {
-        path: 'dashboard',
-        loadChildren: () => import('./pages/pages.routes').then(m => m.PagesRoutes),
+        loadChildren: () => import('./pages/routes').then(r => r.children),
       },
     ],
   },

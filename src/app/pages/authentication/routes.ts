@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 import { AppErrorComponent } from './error/error.component';
 import { LoginComponent } from '@app/pages/authentication/login/login.component';
 
-export const AuthenticationRoutes: Routes = [
+export const children: Routes = [
   {
     path: '',
     children: [

@@ -6,7 +6,12 @@ export const navItems: NavItem[] = [
   },
   {
     displayName: 'Dashboard',
-    iconName: 'solar:home-angle-line-duotone',
+    iconName: 'solar:widget-line-duotone',
     route: '/dashboard',
+  },
+  {
+    displayName: 'Jornadas',
+    iconName: 'solar:routing-3-bold-duotone',
+    route: '/jornadas',
   },
 ];
