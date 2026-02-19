@@ -1,0 +1,40 @@
+<mat-card class="cardWithShadow mb-0!">
+  <mat-card-content>
+    <div class="flex flex-col gap-6">
+      <div>
+        <mat-card-title>{{ title() }}</mat-card-title>
+        @if (subtitle()) {
+          <mat-card-subtitle>{{ subtitle() }}</mat-card-subtitle>
+        }
+      </div>
+
+      @if (displayStages().length) {
+        <ol class="flex flex-col gap-4" [attr.aria-label]="listAriaLabel()">
+          @for (stage of displayStages(); track stage.key) {
+            <li class="flex flex-col gap-2">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <div class="text-sm font-semibold text-dark">{{ stage.label }}</div>
+                  @if (stage.description) {
+                    <div class="text-xs text-muted">{{ stage.description }}</div>
+                  }
+                </div>
+                <div class="text-sm font-semibold text-dark">
+                  {{ valuePrefix() }}{{ stage.value | number:'1.0-0' }}{{ valueSuffix() }}
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="h-1 flex-1 rounded-full bg-light-secondary">
+                  <div class="h-1 rounded-full bg-primary" [style.width.%]="stage.percentOfBase"></div>
+                </div>
+                <div class="text-xs text-muted">{{ stage.percentOfPrevious | number:'1.0-0' }}% vs anterior</div>
+              </div>
+            </li>
+          }
+        </ol>
+      } @else {
+        <div class="text-sm text-muted">Sem dados para exibir.</div>
+      }
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,22 @@
+<mat-card class="cardWithShadow mb-0!">
+  <mat-card-content>
+    <div class="flex flex-col gap-6">
+      <div>
+        <mat-card-title>{{ title() }}</mat-card-title>
+        <mat-card-subtitle>{{ subtitle() }}</mat-card-subtitle>
+      </div>
+
+      <apx-chart
+        [series]="chart().series"
+        [plotOptions]="chart().plotOptions"
+        [dataLabels]="chart().dataLabels"
+        [chart]="chart().chart"
+        [legend]="chart().legend"
+        [colors]="chart().colors"
+        [tooltip]="chart().tooltip"
+        [labels]="chart().labels"
+        [stroke]="chart().stroke"
+      ></apx-chart>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -12,7 +12,7 @@ export interface AppSettings {
 
 export const defaults: AppSettings = {
   dir: 'ltr',
-  theme: 'light',
+  theme: 'dark',
   sidenavOpened: false,
   sidenavCollapsed: false,
   boxed: true,

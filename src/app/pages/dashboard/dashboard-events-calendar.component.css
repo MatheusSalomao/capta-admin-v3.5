@@ -1,0 +1,223 @@
+/* Component Scoped Styles */
+app-dashboard-events-calendar .calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+app-dashboard-events-calendar .calendar-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--mat-sys-on-surface);
+  text-transform: capitalize;
+  margin: 0;
+}
+
+app-dashboard-events-calendar .calendar-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+app-dashboard-events-calendar .calendar-view-selector {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 10px;
+  border: 1px solid var(--mat-sys-outline-variant);
+  background: var(--mat-sys-surface);
+}
+
+app-dashboard-events-calendar .view-btn {
+  min-width: 0 !important;
+  padding: 6px 16px !important;
+  font-weight: 500 !important;
+  font-size: 0.675rem !important;
+  line-height: 1.2 !important;
+  color: var(--mat-sys-on-surface-variant) !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+}
+
+app-dashboard-events-calendar .view-btn:hover {
+  background: var(--mat-sys-surface-variant) !important;
+}
+
+app-dashboard-events-calendar .view-btn.active {
+  background: var(--mat-sys-primary-container) !important;
+  color: var(--mat-sys-on-primary-container) !important;
+}
+
+app-dashboard-events-calendar .calendar-navigation {
+  display: flex;
+  gap: 4px;
+}
+
+/* Calendar customizations for angular-calendar library */
+
+/* Month View */
+app-dashboard-events-calendar .cal-month-view {
+  background-color: var(--mat-sys-surface);
+}
+
+app-dashboard-events-calendar .cal-month-view .cal-header {
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--mat-sys-on-surface);
+  background-color: var(--mat-sys-surface-container-highest);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+app-dashboard-events-calendar .cal-month-view .cal-days {
+  border-color: var(--mat-sys-outline-variant);
+}
+
+app-dashboard-events-calendar .cal-month-view .cal-day-cell {
+  border-color: var(--mat-sys-outline-variant) !important;
+  background-color: var(--mat-sys-surface);
+}
+
+app-dashboard-events-calendar .cal-month-view .cal-day-cell:hover {
+  background-color: var(--mat-sys-surface-container-low) !important;
+}
+
+app-dashboard-events-calendar .cal-month-view .cal-day-cell.cal-today {
+  background-color: var(--mat-sys-primary-fixed-dim) !important;
+}
+
+app-dashboard-events-calendar .cal-month-view .cal-day-cell.cal-out-month .cal-day-number {
+  color: var(--mat-sys-on-surface-variant);
+  opacity: 0.5;
+}
+
+app-dashboard-events-calendar .cal-month-view .cal-day-number {
+  color: var(--mat-sys-on-surface);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+app-dashboard-events-calendar .cal-month-view .cal-day-badge {
+  background-color: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+  font-size: 0.75rem;
+  margin-top: 4px;
+}
+
+app-dashboard-events-calendar .cal-month-view .cal-open-day-events {
+  background-color: var(--mat-sys-surface-container-low);
+  border: 1px solid var(--mat-sys-outline-variant);
+  box-shadow: var(--shadow-sm);
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 8px;
+}
+
+app-dashboard-events-calendar .cal-month-view .cal-event {
+  background-color: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+  border-left: 4px solid var(--mat-sys-primary);
+}
+
+app-dashboard-events-calendar .cal-month-view .cal-event:hover {
+  background-color: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+}
+
+/* Week View */
+app-dashboard-events-calendar .cal-week-view {
+  background-color: var(--mat-sys-surface);
+  border-color: var(--mat-sys-outline-variant);
+}
+
+app-dashboard-events-calendar .cal-week-view .cal-day-headers {
+  border-color: var(--mat-sys-outline-variant);
+  background-color: var(--mat-sys-surface-container-highest);
+}
+
+app-dashboard-events-calendar .cal-week-view .cal-day-headers .cal-header {
+  color: var(--mat-sys-on-surface);
+  font-weight: 600;
+  padding: 12px 0;
+}
+
+app-dashboard-events-calendar .cal-week-view .cal-day-headers .cal-header:hover {
+  background-color: var(--mat-sys-surface-container-low);
+}
+
+app-dashboard-events-calendar .cal-week-view .cal-time {
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 0.75rem;
+}
+
+app-dashboard-events-calendar .cal-week-view .cal-hour-segment {
+  border-color: var(--mat-sys-outline-variant) !important;
+}
+
+app-dashboard-events-calendar .cal-week-view .cal-hour:odd {
+  background-color: var(--mat-sys-surface-container-lowest);
+}
+
+/* Day View */
+app-dashboard-events-calendar .cal-day-view {
+  background-color: var(--mat-sys-surface);
+  border-color: var(--mat-sys-outline-variant);
+}
+
+app-dashboard-events-calendar .cal-day-view .cal-day-headers {
+  border-color: var(--mat-sys-outline-variant);
+  background-color: var(--mat-sys-surface-container-highest);
+}
+
+app-dashboard-events-calendar .cal-day-view .cal-day-headers .cal-header {
+  color: var(--mat-sys-on-surface);
+  font-weight: 600;
+  padding: 12px 0;
+}
+
+app-dashboard-events-calendar .cal-day-view .cal-time {
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 0.75rem;
+}
+
+app-dashboard-events-calendar .cal-day-view .cal-hour-segment {
+  border-color: var(--mat-sys-outline-variant) !important;
+}
+
+app-dashboard-events-calendar .cal-day-view .cal-hour:odd {
+  background-color: var(--mat-sys-surface-container-lowest);
+}
+
+/* Events (all views) */
+
+app-dashboard-events-calendar .cal-event-title {
+  color: inherit;
+}
+
+/* Drag and Drop */
+app-dashboard-events-calendar .cal-drag-over {
+  background-color: var(--mat-sys-primary-fixed-dim) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  app-dashboard-events-calendar .calendar-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  app-dashboard-events-calendar .calendar-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  app-dashboard-events-calendar .calendar-view-selector {
+    flex: 1;
+    justify-content: center;
+  }
+}

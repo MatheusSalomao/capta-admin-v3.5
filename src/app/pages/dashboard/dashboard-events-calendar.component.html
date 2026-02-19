@@ -1,0 +1,60 @@
+<mat-card class="cardWithShadow overflow-hidden">
+  <mat-card-content class="!p-6">
+    <div class="calendar-header">
+      <h2 class="calendar-title">{{ viewTitle() }}</h2>
+      <div class="calendar-controls">
+        <div class="calendar-view-selector" role="group" aria-label="Visualização do calendário">
+          <button mat-button class="view-btn" [class.active]="view() === viewMonth" (click)="setView(viewMonth)">
+            Mês
+          </button>
+          <button mat-button class="view-btn" [class.active]="view() === viewWeek" (click)="setView(viewWeek)">
+            Semana
+          </button>
+          <button mat-button class="view-btn" [class.active]="view() === viewDay" (click)="setView(viewDay)">
+            Dia
+          </button>
+        </div>
+        <div class="calendar-navigation" role="group" aria-label="Navegação do calendário">
+          <button mat-icon-button type="button" (click)="goToPreviousMonth()" aria-label="Mês anterior">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          <button mat-icon-button type="button" (click)="goToToday()" aria-label="Hoje">
+            <mat-icon>today</mat-icon>
+          </button>
+          <button mat-icon-button type="button" (click)="goToNextMonth()" aria-label="Próximo mês">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    @switch (view()) {
+      @case (viewMonth) {
+        <mwl-calendar-month-view
+          [viewDate]="viewDate()"
+          [events]="calendarEvents()"
+          [refresh]="refresh"
+          [activeDayIsOpen]="activeDayIsOpen()"
+          [locale]="'pt-BR'"
+          (dayClicked)="dayClicked($event.day)"
+        />
+      }
+      @case (viewWeek) {
+        <mwl-calendar-week-view
+          [viewDate]="viewDate()"
+          [events]="calendarEvents()"
+          [refresh]="refresh"
+          [locale]="'pt-BR'"
+        />
+      }
+      @case (viewDay) {
+        <mwl-calendar-day-view
+          [viewDate]="viewDate()"
+          [events]="calendarEvents()"
+          [refresh]="refresh"
+          [locale]="'pt-BR'"
+        />
+      }
+    }
+  </mat-card-content>
+</mat-card>

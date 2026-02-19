@@ -1,3 +1,3 @@
 export const environment = {
-  apiBaseUrl: 'https://teste-api-capta.uninorteac.edu.br/api/v3',
+  apiBaseUrl: 'https://192.168.1.19:8000/api/v3',
 };

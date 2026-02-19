@@ -1,3 +1,4 @@
+export * from './types.enum';
 export * from './sessoes.canais.get.params';
 export * from './sessoes.canais.get.response';
 export * from './sessoes.perfil.get.response';
@@ -5,3 +6,4 @@ export * from './sessoes.tokens.post.body';
 export * from './sessoes.tokens.post.response';
 export * from './sessoes.unidades.get.params';
 export * from './sessoes.unidades.get.response';
+export * from './mantida.dashboard.series.get.response';

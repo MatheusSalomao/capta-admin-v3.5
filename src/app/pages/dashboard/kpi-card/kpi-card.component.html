@@ -1,0 +1,49 @@
+<mat-card class="cardWithShadow mb-0! h-full">
+  <mat-card-content>
+    <div class="flex flex-col gap-4">
+      <div>
+        <mat-card-title>{{ title() }}</mat-card-title>
+        @if (subtitle()) {
+          <mat-card-subtitle>{{ subtitle() }}</mat-card-subtitle>
+        }
+      </div>
+
+      <div class="flex items-center justify-between gap-4">
+        <div class="text-3xl font-semibold text-dark">
+          {{ valuePrefix() }}{{ value() | number:valueFormat() }}{{ valueSuffix() }}
+        </div>
+        <div class="flex items-center">
+          @if (change() < 0) {
+            <button
+              mat-mini-fab
+              class="bg-light-error text-error shadow-none size-5.5!"
+              [attr.aria-label]="trendAriaLabel()"
+            >
+              <i-tabler name="arrow-down-right" class="size-4! flex!"></i-tabler>
+            </button>
+          } @else {
+            <button
+              mat-mini-fab
+              class="bg-light-success text-success shadow-none size-5.5!"
+              [attr.aria-label]="trendAriaLabel()"
+            >
+              <i-tabler name="arrow-up-right" class="size-4! flex!"></i-tabler>
+            </button>
+          }
+          <div class="ms-3">
+            <div class="text-sm font-semibold text-dark">
+              @if (change() < 0) {
+                -{{ absChange() | number:changeFormat() }}%
+              } @else {
+                +{{ absChange() | number:changeFormat() }}%
+              }
+            </div>
+            @if (changeLabel()) {
+              <div class="text-xs text-muted">{{ changeLabel() }}</div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

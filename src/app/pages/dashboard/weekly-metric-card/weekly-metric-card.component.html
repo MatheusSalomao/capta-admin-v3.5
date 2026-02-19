@@ -1,0 +1,53 @@
+<mat-card class="cardWithShadow overflow-hidden mb-0!">
+  <mat-card-content>
+    <mat-card-subtitle>{{ title() }}</mat-card-subtitle>
+    <h5 class="text-2xl font-semibold">
+      <app-counter class="text-xl text-dark font-semibold block" [countTo]="sum()" [duration]="1000"></app-counter>
+    </h5>
+
+    <div class="flex items-center mt-3">
+      @if (variation() < 0) {
+        <button
+          mat-mini-fab
+          class="bg-light-error text-error shadow-none size-5.5!"
+          [attr.aria-label]="trendAriaLabel()"
+        >
+          <i-tabler name="arrow-down-right" class="size-4! flex!"></i-tabler>
+        </button>
+      } @else {
+        <button
+          mat-mini-fab
+          class="bg-light-success text-success shadow-none size-5.5!"
+          [attr.aria-label]="trendAriaLabel()"
+        >
+          <i-tabler name="arrow-up-right" class="size-4! flex!"></i-tabler>
+        </button>
+      }
+      <div class="ms-3">
+        <div class="text-sm font-semibold text-dark">
+          @if (variation() < 0) {
+            {{ variation() | number:changeFormat() }}%
+          } @else {
+            +{{ variation() | number:changeFormat() }}%
+          }
+        </div>
+        @if (variationLabel()) {
+          <div class="text-xs text-muted">{{ variationLabel() }}</div>
+        }
+      </div>
+    </div>
+  </mat-card-content>
+
+  <apx-chart
+    [series]="chart().series"
+    [dataLabels]="chart().dataLabels"
+    [chart]="chart().chart"
+    [legend]="chart().legend"
+    [colors]="chart().colors"
+    [stroke]="chart().stroke"
+    [tooltip]="chart().tooltip"
+    [plotOptions]="chart().plotOptions"
+    [fill]="chart().fill"
+    [responsive]="chart().responsive"
+  ></apx-chart>
+</mat-card>
