@@ -16,10 +16,9 @@ import { SubscribesSegmentationComponent } from './subscribes-segmentation.compo
 import { WeeklyInterestsComponent } from './weekly-interests.component';
 import { WeeklyRegistrationsComponent } from './weekly-registrations.component';
 import { WeeklySubscribersComponent } from './weekly-subscribers.component';
-import { DashboardService } from '@app/api/services/dashboard.service';
 import { finalize, forkJoin } from 'rxjs';
 import { RankItem } from './rank-card/rank-card.component';
-import { MantidaDashboardEventosGetResponse, MantidaDashboardRankBaseGetResponse } from '@app/api';
+import { DashboardService, MantidaDashboardEventosGetResponse, MantidaDashboardRankBaseGetResponse } from '@app/api';
 
 @Component({
   selector: 'app-dashboard',
@@ -204,7 +203,7 @@ export class DashboardComponent implements OnInit {
       MODELO_AVALIACAO: Record<string, { TEXTO: string; COR: { primary: string; secondary: string } }>;
     },
     tipo: string,
-    evento: string,
+    evento: string
   ): string {
     if (this.isKeyOf(options, tipo)) {
       const eventos = options[tipo];
@@ -223,7 +222,7 @@ export class DashboardComponent implements OnInit {
       MODELO_AVALIACAO: Record<string, { TEXTO: string; COR: { primary: string; secondary: string } }>;
     },
     tipo: string,
-    evento: string,
+    evento: string
   ): { primary: string; secondary: string } {
     const $default = {
       primary: 'var(--mat-sys-primary-100)',
