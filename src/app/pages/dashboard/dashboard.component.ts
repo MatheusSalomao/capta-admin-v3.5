@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal, ViewEncapsulation } from '@angular/core';
 import { MatCard, MatCardContent } from '@angular/material/card';
-import { DashboardEventsCalendarComponent } from './dashboard-events-calendar.component';
+import {
+  DashboardCalendarEvent,
+  DashboardEventsCalendarComponent,
+} from './events-calendar/dashboard-events-calendar.component';
 import { InterestToRegistrationTimeComponent } from './interest-to-registration-time.component';
 import { InterestToSubscribeRateComponent } from './interest-to-subscribe-rate.component';
 import { InterestsRankingComponent } from './interests-ranking.component';
@@ -16,6 +19,7 @@ import { WeeklySubscribersComponent } from './weekly-subscribers.component';
 import { DashboardService } from '@app/api/services/dashboard.service';
 import { finalize, forkJoin } from 'rxjs';
 import { RankItem } from './rank-card/rank-card.component';
+import { MantidaDashboardEventosGetResponse, MantidaDashboardRankBaseGetResponse } from '@app/api';
 
 @Component({
   selector: 'app-dashboard',
@@ -44,23 +48,16 @@ export class DashboardComponent implements OnInit {
   dashboard = inject(DashboardService);
   isLoading = signal(true);
   readonly placeholders = Array.from({ length: 12 });
-  interesses = signal<number[]>([]);
-  inscricoes = signal<number[]>([]);
-  matriculas = signal<number[]>([]);
-  interesse_vs_inscricao = signal<number[]>([]);
-  inscricao_vs_matricula = signal<number[]>([]);
-  tempo_medio = signal<number[]>([]);
+  serie_interesses = signal<number[]>([]);
+  serie_inscricoes = signal<number[]>([]);
+  serie_matriculas = signal<number[]>([]);
+  serie_interesse_vs_inscricao = signal<number[]>([]);
+  serie_inscricao_vs_matricula = signal<number[]>([]);
+  serie_tempo_medio = signal<number[]>([]);
   segmentacao_interesse = signal<number[]>([]);
   segmentacao_inscricao = signal<number[]>([]);
   segmentacao_matricula = signal<number[]>([]);
-  eventos = signal<
-    {
-      key: string;
-      date: string;
-      title: string;
-      description?: string;
-    }[]
-  >([]);
+  eventos = signal<Array<DashboardCalendarEvent>>([]);
   rank_interesse = signal<RankItem[]>([]);
   rank_inscricao = signal<RankItem[]>([]);
   rank_matricula = signal<RankItem[]>([]);
@@ -75,12 +72,12 @@ export class DashboardComponent implements OnInit {
     })
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe(({ series, ranks, segmentacoes, eventos }) => {
-        this.interesses.update(() => [...series.interesses]);
-        this.inscricoes.update(() => [...series.inscricoes]);
-        this.matriculas.update(() => [...series.matriculas]);
-        this.interesse_vs_inscricao.update(() => [...series.interesse_vs_inscricao]);
-        this.inscricao_vs_matricula.update(() => [...series.inscricao_vs_matricula]);
-        this.tempo_medio.update(() => [...series.tempo_medio]);
+        this.serie_interesses.update(() => [...series.interesses]);
+        this.serie_inscricoes.update(() => [...series.inscricoes]);
+        this.serie_matriculas.update(() => [...series.matriculas]);
+        this.serie_interesse_vs_inscricao.update(() => [...series.interesse_vs_inscricao]);
+        this.serie_inscricao_vs_matricula.update(() => [...series.inscricao_vs_matricula]);
+        this.serie_tempo_medio.update(() => [...series.tempo_medio]);
 
         this.rank_interesse.set(this.toRankItems(ranks.interesse));
         this.rank_inscricao.set(this.toRankItems(ranks.inscricao));
@@ -105,11 +102,11 @@ export class DashboardComponent implements OnInit {
           segmentacoes.matricula.matricula,
         ]);
 
-        this.eventos.set(this.toTimelineEvents(eventos));
+        this.eventos.set(this.toCalendarEvents(eventos));
       });
   }
 
-  private toRankItems(items: Array<{ id: number; nome: string; total: number }>): RankItem[] {
+  private toRankItems(items: Array<MantidaDashboardRankBaseGetResponse>): RankItem[] {
     return items.map(item => ({
       key: String(item.id),
       label: item.nome,
@@ -117,51 +114,130 @@ export class DashboardComponent implements OnInit {
     }));
   }
 
-  private toTimelineEvents(
-    items: Array<{ id: string; tipo: string; data_hora: string; evento: string; descricao: string }>
-  ) {
-    const titles = {
+  private toCalendarEvents(items: Array<MantidaDashboardEventosGetResponse>) {
+    const options = {
       CAPTACAO: {
-        INICIO: 'Início da captação',
-        FIM: 'Fim da captação',
+        INICIO: {
+          TEXTO: 'Início da captação às',
+          COR: {
+            primary: 'var(--mat-sys-accent-100)',
+            secondary: 'var(--mat-sys-accent-400)',
+          },
+        },
+        FIM: {
+          TEXTO: 'Fim da captação às',
+          COR: {
+            primary: 'var(--mat-sys-error)',
+            secondary: 'var(--mat-sys-error)',
+          },
+        },
       },
       PROCESSO_SELETIVO: {
-        INICIO_INSCRICAO: 'Início da inscrição',
-        FIM_INSCRICAO: 'Fim da inscrição',
-        FIM_AVALIACAO: 'Fim da avaliação',
-        FIM_PRE_MATRICULA: 'Fim da pré-matrícula',
+        INICIO_INSCRICAO: {
+          TEXTO: 'Início das inscrições às',
+          COR: {
+            primary: 'var(--mat-sys-primary)',
+            secondary: 'var(--mat-sys-primary-fixed-dim)',
+          },
+        },
+        FIM_INSCRICAO: {
+          TEXTO: 'Fim das inscrições às',
+          COR: {
+            primary: 'var(--warning-color)',
+            secondary: 'var(--lightwarning-color)',
+          },
+        },
+        FIM_AVALIACAO: {
+          TEXTO: 'Fim das avaliações às',
+          COR: {
+            primary: 'var(--mat-sys-primary)',
+            secondary: 'var(--mat-sys-primary-fixed-dim)',
+          },
+        },
+        FIM_PRE_MATRICULA: {
+          TEXTO: 'Fim do perídio de pré-matrícula às',
+          COR: {
+            primary: 'var(--mat-sys-error)',
+            secondary: 'var(--mat-sys-error)',
+          },
+        },
       },
       MODELO_AVALIACAO: {
-        INICIO_AVALIACAO: 'Início da avaliação',
-        FIM_AVALIACAO: 'Fim da avaliação',
-        FIM_LIMITE_AVALIACAO: 'Fim do limite de avaliação',
+        INICIO_AVALIACAO: {
+          TEXTO: 'Início das avaliações às',
+          COR: {
+            primary: 'var(--mat-sys-primary)',
+            secondary: 'var(--mat-sys-primary-fixed-dim)',
+          },
+        },
+        FIM_AVALIACAO: {
+          TEXTO: 'Fim das avaliações às',
+          COR: {
+            primary: 'var(--mat-sys-primary)',
+            secondary: 'var(--mat-sys-primary-fixed-dim)',
+          },
+        },
+        FIM_LIMITE_AVALIACAO: {
+          TEXTO: 'Fim do praza para lançamento de notas às',
+          COR: {
+            primary: 'var(--warning-color)',
+            secondary: 'var(--lightwarning-color)',
+          },
+        },
       },
     } as const;
+    const idFormatter = (id: string) => id.split(':')[0].padStart(3, '0');
+
     return items.map(item => ({
       key: item.id,
       date: item.data_hora,
-      title: this.getTimelineTitle(titles, item.tipo, item.evento),
-      description: item.descricao || undefined,
+      title: this.getEventTitle(options, item.tipo, item.evento),
+      description: `[cód. ${idFormatter(item.id)}] ${item.descricao}` || undefined,
+      color: this.getEventColor(options, item.tipo, item.evento),
     }));
   }
 
-  private getTimelineTitle(
-    titles: {
-      CAPTACAO: Record<string, string>;
-      PROCESSO_SELETIVO: Record<string, string>;
-      MODELO_AVALIACAO: Record<string, string>;
+  private getEventTitle(
+    options: {
+      CAPTACAO: Record<string, { TEXTO: string; COR: { primary: string; secondary: string } }>;
+      PROCESSO_SELETIVO: Record<string, { TEXTO: string; COR: { primary: string; secondary: string } }>;
+      MODELO_AVALIACAO: Record<string, { TEXTO: string; COR: { primary: string; secondary: string } }>;
     },
     tipo: string,
-    evento: string
+    evento: string,
   ): string {
-    if (this.isKeyOf(titles, tipo)) {
-      const eventos = titles[tipo];
+    if (this.isKeyOf(options, tipo)) {
+      const eventos = options[tipo];
       if (this.isKeyOf(eventos, evento)) {
-        return eventos[evento];
+        return eventos[evento].TEXTO;
       }
     }
 
     return evento || 'Evento desconhecido';
+  }
+
+  private getEventColor(
+    options: {
+      CAPTACAO: Record<string, { TEXTO: string; COR: { primary: string; secondary: string } }>;
+      PROCESSO_SELETIVO: Record<string, { TEXTO: string; COR: { primary: string; secondary: string } }>;
+      MODELO_AVALIACAO: Record<string, { TEXTO: string; COR: { primary: string; secondary: string } }>;
+    },
+    tipo: string,
+    evento: string,
+  ): { primary: string; secondary: string } {
+    const $default = {
+      primary: 'var(--mat-sys-primary-100)',
+      secondary: 'var(--mat-sys-primary-400)',
+    };
+
+    if (this.isKeyOf(options, tipo)) {
+      const eventos = options[tipo];
+      if (this.isKeyOf(eventos, evento)) {
+        return eventos[evento].COR || $default;
+      }
+    }
+
+    return $default;
   }
 
   private isKeyOf<T extends object>(value: T, key: string): key is Extract<keyof T, string> {

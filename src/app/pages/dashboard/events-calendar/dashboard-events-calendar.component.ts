@@ -1,16 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, effect, input, signal, ViewEncapsulation } from '@angular/core';
-import {
-  CalendarDateFormatter,
-  CalendarEvent,
-  CalendarModule,
-  CalendarView,
-  DateFormatterParams,
-} from 'angular-calendar';
-import { MatCard, MatCardContent, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
+import { CalendarEvent, CalendarModule, CalendarView } from 'angular-calendar';
+import { MatCard, MatCardContent } from '@angular/material/card';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { DatePipe, formatDate } from '@angular/common';
-import { isSameDay, isSameMonth, subMonths, addMonths } from 'date-fns';
+import { formatDate } from '@angular/common';
+import { addMonths, isSameDay, isSameMonth, subMonths } from 'date-fns';
 import { Subject } from 'rxjs';
 
 export interface DashboardCalendarEvent {
@@ -18,6 +12,11 @@ export interface DashboardCalendarEvent {
   date: string | Date;
   title: string;
   description?: string;
+  color?: {
+    primary: string;
+    secondary: string;
+  };
+  data?: any;
 }
 
 const calendarColors = {
@@ -54,9 +53,9 @@ export class DashboardEventsCalendarComponent {
         title: this.formatEventTitle(event),
         start: localDate,
         allDay: !this.hasTimeValue(event.date),
-        color: calendarColors,
+        color: event.color || calendarColors,
       };
-    })
+    }),
   );
 
   readonly viewTitle = computed(() => {
@@ -124,7 +123,9 @@ export class DashboardEventsCalendarComponent {
       return event.title;
     }
 
-    return `${event.title} — ${description}`;
+    const time = new Date(event.date).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' } );
+
+    return `${event.title} ${time} - ${description}`;
   }
 
   private capitalize(value: string): string {

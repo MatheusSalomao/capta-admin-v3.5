@@ -1,9 +1,9 @@
 <mat-card class="cardWithShadow overflow-hidden">
-  <mat-card-content class="!p-6">
-    <div class="calendar-header">
+  <mat-card-content class="p-6!">
+    <div class="flex justify-between items-center mb-6">
       <h2 class="calendar-title">{{ viewTitle() }}</h2>
-      <div class="calendar-controls">
-        <div class="calendar-view-selector" role="group" aria-label="Visualização do calendário">
+      <div class="flex justify-between items-center">
+        <div class="calendar-view-selector hidden text-sm" role="group" aria-label="Visualização do calendário">
           <button mat-button class="view-btn" [class.active]="view() === viewMonth" (click)="setView(viewMonth)">
             Mês
           </button>

@@ -19,13 +19,13 @@ import { KpiCardComponent } from './kpi-card/kpi-card.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InterestToRegistrationTimeComponent {
-  readonly title = 'Tempo medio até matrícula';
+  readonly title = 'Tempo médio até matrícula';
   readonly subtitle = 'Dias entre interesse e matrícula';
   readonly valueSuffix = ' dias';
   readonly valueFormat = '1.0-1';
   readonly changeFormat = '1.0-1';
   readonly changeLabel = 'vs semana anterior';
-  readonly trendAriaLabel = 'Tendencia do tempo medio';
+  readonly trendAriaLabel = 'Tendencia do tempo médio';
 
   readonly series = input<number[]>([]);
 

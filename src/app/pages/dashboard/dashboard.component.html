@@ -15,87 +15,62 @@
   <div class="grid grid-cols-12 gap-6">
     <!-- Conversao -->
     <div class="xl:col-span-4 col-span-12">
-      <app-interest-to-subscribe-rate [series]="interesse_vs_inscricao()"/>
+      <app-interest-to-subscribe-rate [series]="serie_interesse_vs_inscricao()" />
     </div>
 
     <div class="xl:col-span-4 col-span-12">
-      <app-subscribe-to-registration-rate [series]="inscricao_vs_matricula()"/>
+      <app-subscribe-to-registration-rate [series]="serie_inscricao_vs_matricula()" />
     </div>
 
     <div class="xl:col-span-4 col-span-12">
-      <app-interest-to-registration-time [series]="tempo_medio()"/>
+      <app-interest-to-registration-time [series]="serie_tempo_medio()" />
     </div>
 
-    <!--  <div class="col-span-12">-->
-    <!--    <app-conversion-funnel/>-->
-    <!--  </div>-->
+    <!-- Calendário -->
     <div class="col-span-12">
       <app-dashboard-events-calendar
         [events]="eventos()"
       />
     </div>
 
+    <!-- Interesse -->
     <div class="xl:col-span-12 col-span-12">
-      <app-weekly-interests-chart [series]="interesses()"/>
+      <app-weekly-interests-chart [series]="serie_interesses()" />
     </div>
 
     <div class="xl:col-span-8 col-span-12">
-      <app-interests-ranking [items]="rank_interesse()"/>
+      <app-interests-ranking [items]="rank_interesse()" />
     </div>
 
     <div class="xl:col-span-4 col-span-12">
-      <app-interests-segmentation [series]="segmentacao_interesse()"/>
+      <app-interests-segmentation [series]="segmentacao_interesse()" />
     </div>
 
+    <!-- Inscrição -->
     <div class="xl:col-span-12 col-span-12">
-      <app-weekly-subscribers [series]="inscricoes()"/>
+      <app-weekly-subscribers [series]="serie_inscricoes()" />
     </div>
 
     <div class="xl:col-span-8 col-span-12">
-      <app-subscribes-ranking [items]="rank_inscricao()"/>
+      <app-subscribes-ranking [items]="rank_inscricao()" />
     </div>
 
     <div class="xl:col-span-4 col-span-12">
-      <app-subscribes-segmentation [series]="segmentacao_inscricao()"/>
+      <app-subscribes-segmentation [series]="segmentacao_inscricao()" />
     </div>
 
+    <!-- Matrícula -->
     <div class="xl:col-span-12 col-span-12">
-      <app-weekly-registrations [series]="matriculas()"/>
+      <app-weekly-registrations [series]="serie_matriculas()" />
     </div>
 
     <div class="xl:col-span-8 col-span-12">
-      <app-registrations-ranking [items]="rank_matricula()"/>
+      <app-registrations-ranking [items]="rank_matricula()" />
     </div>
 
     <div class="xl:col-span-4 col-span-12">
-      <app-registrations-segmentation [series]="segmentacao_matricula()"/>
+      <app-registrations-segmentation [series]="segmentacao_matricula()" />
     </div>
 
-
-    <!--    &lt;!&ndash;  Top&ndash;&gt;-->
-    <!--    <div class="xl:col-span-4 col-span-12">-->
-    <!--      <app-interests-ranking/>-->
-    <!--    </div>-->
-
-    <!--    <div class="xl:col-span-4 col-span-12">-->
-    <!--      <app-subscribes-ranking/>-->
-    <!--    </div>-->
-
-    <!--    <div class="xl:col-span-4 col-span-12">-->
-    <!--      <app-registrations-ranking/>-->
-    <!--    </div>-->
-
-    <!--  Segmentção-->
-    <!--    <div class="xl:col-span-4 col-span-12">-->
-    <!--      <app-interests-segmentation/>-->
-    <!--    </div>-->
-
-    <!--    <div class="xl:col-span-4 col-span-12">-->
-    <!--      <app-subscribes-segmentation/>-->
-    <!--    </div>-->
-
-    <!--    <div class="xl:col-span-4 col-span-12">-->
-    <!--      <app-registrations-segmentation/>-->
-    <!--    </div>-->
   </div>
 }
