@@ -66,12 +66,12 @@
           [showToggle]="!isOver"
           (toggleCollapsed)="toggleCollapsed()"
           (toggleMobileNav)="sidenav.toggle()"
-          (optionsChange)="receiveOptions($event)"></app-header>
+          (optionsChange)="onOptionsChange($event)"></app-header>
       } @else {
         <!-- horizontal header -->
         <app-horizontal-header
           (toggleMobileNav)="sidenav.toggle()"
-          (optionsChange)="receiveOptions($event)"></app-horizontal-header>
+          (optionsChange)="onOptionsChange($event)"></app-horizontal-header>
       }
       @if (options.horizontal) {
         <app-horizontal-sidebar></app-horizontal-sidebar>

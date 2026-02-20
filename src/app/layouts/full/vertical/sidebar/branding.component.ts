@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { CoreService } from '@app/services/core.service';
+import { AppSettings } from '@app/config';
 
 @Component({
   selector: 'app-branding',
@@ -15,6 +16,15 @@ import { CoreService } from '@app/services/core.service';
   `,
 })
 export class BrandingComponent {
-  options = this.settings.getOptions();
-  constructor(private settings: CoreService) {}
+  options: AppSettings;
+
+  constructor(private settings: CoreService) {
+    this.options = this.settings.options();
+    effect(() => {
+      const updated = this.settings.options();
+      queueMicrotask(() => {
+        this.options = updated;
+      });
+    });
+  }
 }

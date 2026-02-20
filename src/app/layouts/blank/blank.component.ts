@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { CoreService } from '@app/services/core.service';
 import { AppSettings } from '@app/config';
 import { CommonModule } from '@angular/common';
@@ -14,12 +14,19 @@ import { MaterialModule } from '@app/material.module';
 export class BlankComponent {
   private htmlElement!: HTMLHtmlElement;
 
-  options = this.settings.getOptions();
+  options: AppSettings;
 
   constructor(private settings: CoreService) {
     this.htmlElement = document.querySelector('html')!;
-    // Initialize project theme with options
-    this.receiveOptions(this.options);
+    this.options = this.settings.options();
+    // Initialize and keep theme in sync with settings
+    effect(() => {
+      const updated = this.settings.options();
+      queueMicrotask(() => {
+        this.options = updated;
+        this.receiveOptions(updated);
+      });
+    });
   }
 
   receiveOptions(options: AppSettings): void {

@@ -8,6 +8,7 @@ export const children: Routes = [
     data: {
       title: 'Jornadas',
       urls: [{ title: 'Jornadas', url: '/jornadas' }],
+      boxed: false,
     },
   },
 ];

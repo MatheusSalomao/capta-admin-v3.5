@@ -1,11 +1,11 @@
 import { BreakpointObserver, MediaMatcher } from '@angular/cdk/layout';
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, effect } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MatSidenav, MatSidenavContent } from '@angular/material/sidenav';
 import { CoreService } from '@app/services/core.service';
 import { AppSettings } from '@app/config';
 import { filter } from 'rxjs/operators';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { navItems } from './vertical/sidebar/sidebar-data';
 import { AppNavItemComponent } from './vertical/sidebar/nav-item/nav-item.component';
 import { RouterModule } from '@angular/router';
@@ -50,13 +50,15 @@ export class FullComponent implements OnInit {
   public sidenav: MatSidenav;
   resView = false;
   @ViewChild('content', { static: true }) content!: MatSidenavContent;
-  //get options from service
-  options = this.settings.getOptions();
+  // get options from service (kept in sync via signal effect)
+  options: AppSettings;
   private layoutChangesSubscription = Subscription.EMPTY;
   private isMobileScreen = false;
   private isContentWidthFixed = true;
   private isCollapsedWidthFixed = false;
   private htmlElement!: HTMLHtmlElement;
+  private routeBoxedActive = false;
+  private routeBoxedPrevious: boolean | null = null;
 
   get isOver(): boolean {
     return this.isMobileScreen;
@@ -70,9 +72,19 @@ export class FullComponent implements OnInit {
     private settings: CoreService,
     private mediaMatcher: MediaMatcher,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private breakpointObserver: BreakpointObserver
   ) {
     this.htmlElement = document.querySelector('html')!;
+    this.options = this.settings.options();
+    effect(() => {
+      const updated = this.settings.options();
+      queueMicrotask(() => {
+        this.options = updated;
+        this.receiveOptions(updated);
+      });
+    });
+
     this.layoutChangesSubscription = this.breakpointObserver
       .observe([MOBILE_VIEW, TABLET_VIEW, MONITOR_VIEW, BELOWMONITOR])
       .subscribe(state => {
@@ -86,13 +98,13 @@ export class FullComponent implements OnInit {
         this.resView = state.breakpoints[BELOWMONITOR];
       });
 
-    // Initialize project theme with options
-    this.receiveOptions(this.options);
-
     // This is for scroll to top
     this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(e => {
       this.content.scrollTo({ top: 0 });
+      this.applyRouteBoxedOverride();
     });
+
+    this.applyRouteBoxedOverride();
   }
 
   ngOnInit(): void {}
@@ -121,6 +133,10 @@ export class FullComponent implements OnInit {
     this.settings.setOptions(this.options);
   }
 
+  onOptionsChange(options: AppSettings): void {
+    this.settings.applyOptions(options);
+  }
+
   receiveOptions(options: AppSettings): void {
     this.toggleDarkTheme(options);
     this.toggleColorsTheme(options);
@@ -146,5 +162,37 @@ export class FullComponent implements OnInit {
 
     // Add the selected theme class
     this.htmlElement.classList.add(options.activeTheme);
+  }
+
+  private applyRouteBoxedOverride() {
+    const data = this.getDeepestRouteData(this.activatedRoute);
+    const boxed = data?.['boxed'];
+    if (typeof boxed === 'boolean') {
+      if (!this.routeBoxedActive) {
+        this.routeBoxedPrevious = this.settings.options().boxed;
+        this.routeBoxedActive = true;
+      }
+      if (this.settings.options().boxed !== boxed) {
+        this.settings.applyOptions({ boxed });
+      }
+      return;
+    }
+
+    if (this.routeBoxedActive) {
+      const restore = this.routeBoxedPrevious ?? this.settings.options().boxed;
+      if (this.settings.options().boxed !== restore) {
+        this.settings.applyOptions({ boxed: restore });
+      }
+      this.routeBoxedActive = false;
+      this.routeBoxedPrevious = null;
+    }
+  }
+
+  private getDeepestRouteData(route: ActivatedRoute) {
+    let current = route;
+    while (current.firstChild) {
+      current = current.firstChild;
+    }
+    return current.snapshot?.data ?? null;
   }
 }

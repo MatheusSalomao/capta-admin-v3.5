@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input, effect } from '@angular/core';
 import { CoreService } from '@app/services/core.service';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { MaterialModule } from '@app/material.module';
@@ -21,9 +21,17 @@ export class AppHorizontalHeaderComponent {
 
   @Output() optionsChange = new EventEmitter<AppSettings>();
 
-  constructor(private settings: CoreService) {}
+  options: AppSettings;
 
-  options = this.settings.getOptions();
+  constructor(private settings: CoreService) {
+    this.options = this.settings.options();
+    effect(() => {
+      const updated = this.settings.options();
+      queueMicrotask(() => {
+        this.options = updated;
+      });
+    });
+  }
 
   private emitOptions() {
     this.optionsChange.emit(this.options);
