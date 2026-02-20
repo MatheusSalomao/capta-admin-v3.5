@@ -1,1 +1,68 @@
-<p>lead-aside works!</p>
+<aside
+  aria-label="Leads"
+  class="flex h-full! flex-col border-r border-border bg-background transition-all duration-200"
+  [class.w-14]="collapsed"
+  [class.w-72]="!collapsed"
+>
+  <header
+    class="flex h-12 min-h-12 items-center gap-2 border-b border-border px-2"
+    [class.justify-center]="collapsed"
+    [class.justify-between]="!collapsed"
+    (click)="toggleCollapsed()"
+  >
+    <span class="text-sm font-semibold text-foreground" [hidden]="collapsed">Leads</span>
+    <button
+      type="button"
+      class="flex size-8 items-center justify-center rounded text-foreground/80 transition-colors hover:bg-muted"
+      [attr.aria-label]="collapsed ? 'Expandir painel de leads' : 'Recolher painel de leads'"
+      [attr.aria-expanded]="!collapsed"
+    >
+      <i-tabler
+        class="size-5! flex!"
+        [name]="collapsed ? 'chevron-right' : 'chevron-left'"
+      ></i-tabler>
+    </button>
+
+  </header>
+  <section class="border-b border-border px-2 py-2 h-12.75 min-h-12.75">
+    <label class="flex items-center gap-2 rounded-md border-border bg-muted/30 px-2 py-1.5"
+           [class.border]="!collapsed"
+           [class.justify-center]="collapsed"
+    >
+      <input
+        type="search"
+        placeholder="Pesquisar leads"
+        class="w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+        [hidden]="collapsed"
+      />
+      <i-tabler class="size-4! flex! text-muted-foreground" name="search"
+                (click)="collapsed ? toggleCollapsed() : null"></i-tabler>
+    </label>
+  </section>
+
+  <section class="flex-1 overflow-y-auto py-3 overflow-x-hidden">
+    <div class="flex flex-col px-2" [class]="{'gap-y-2.5': !collapsed}">
+      @for (profile of profiles; track profile.cpf) {
+        <div
+          class="group relative flex cursor-pointer items-center gap-3 rounded-lg px-2  py-2.5 transition-all duration-150 active:scale-[0.98] border border-border/40 min-h-16 max-h-16"
+          [class]="{
+            'justify-center': collapsed,
+            'border-transparent': collapsed
+          }"
+        >
+          <div
+            class="flex size-10 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-primary/10 to-primary/5 text-sm font-bold text-primary ring-2 ring-primary/20 transition-all duration-150 group-hover:ring-primary/30 group-hover:shadow-md"
+            aria-hidden="true"
+          >
+            {{ getInitials(profile.name) }}
+          </div>
+          <div id="dados" class="min-w-0 flex flex-col" [hidden]="collapsed">
+            <span
+            class="truncate text-sm font-semibold text-foreground group-hover:text-primary transition-colors">{{ profile.name }}</span>
+            <span class="text-xs text-muted-foreground/80 font-mono">{{ profile.cpf }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+</aside>
