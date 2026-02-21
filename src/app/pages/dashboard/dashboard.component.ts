@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+  ViewEncapsulation,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import {
   DashboardCalendarEvent,
@@ -16,7 +25,7 @@ import { SubscribesSegmentationComponent } from './subscribes-segmentation.compo
 import { WeeklyInterestsComponent } from './weekly-interests.component';
 import { WeeklyRegistrationsComponent } from './weekly-registrations.component';
 import { WeeklySubscribersComponent } from './weekly-subscribers.component';
-import { finalize, forkJoin } from 'rxjs';
+import { finalize, forkJoin, switchMap, tap, timer } from 'rxjs';
 import { RankItem } from './rank-card/rank-card.component';
 import { DashboardService, MantidaDashboardEventosGetResponse, MantidaDashboardRankBaseGetResponse } from '@app/api';
 
@@ -45,7 +54,9 @@ import { DashboardService, MantidaDashboardEventosGetResponse, MantidaDashboardR
 })
 export class DashboardComponent implements OnInit {
   dashboard = inject(DashboardService);
+  private readonly destroyRef = inject(DestroyRef);
   isLoading = signal(true);
+  private readonly hasLoaded = signal(false);
   readonly placeholders = Array.from({ length: 12 });
   serie_interesses = signal<number[]>([]);
   serie_inscricoes = signal<number[]>([]);
@@ -62,15 +73,26 @@ export class DashboardComponent implements OnInit {
   rank_matricula = signal<RankItem[]>([]);
 
   ngOnInit(): void {
-    this.isLoading.set(true);
-    forkJoin({
+    timer(0, 60_000)
+      .pipe(
+        switchMap(() => this.loadDashboard()),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe();
+  }
+
+  private loadDashboard() {
+    const showLoading = !this.hasLoaded();
+    if (showLoading) {
+      this.isLoading.set(true);
+    }
+    return forkJoin({
       series: this.dashboard.series(),
       ranks: this.dashboard.ranks({ quantidade: 5 }),
       segmentacoes: this.dashboard.segmentacoes(),
       eventos: this.dashboard.eventos(),
-    })
-      .pipe(finalize(() => this.isLoading.set(false)))
-      .subscribe(({ series, ranks, segmentacoes, eventos }) => {
+    }).pipe(
+      tap(({ series, ranks, segmentacoes, eventos }) => {
         this.serie_interesses.update(() => [...series.interesses]);
         this.serie_inscricoes.update(() => [...series.inscricoes]);
         this.serie_matriculas.update(() => [...series.matriculas]);
@@ -102,7 +124,14 @@ export class DashboardComponent implements OnInit {
         ]);
 
         this.eventos.set(this.toCalendarEvents(eventos));
-      });
+      }),
+      finalize(() => {
+        if (showLoading) {
+          this.isLoading.set(false);
+        }
+        this.hasLoaded.set(true);
+      })
+    );
   }
 
   private toRankItems(items: Array<MantidaDashboardRankBaseGetResponse>): RankItem[] {
