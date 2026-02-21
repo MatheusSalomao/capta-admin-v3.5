@@ -13,6 +13,17 @@
   </div>
 } @else {
   <div class="grid grid-cols-12 gap-6">
+    <div class="xl:col-span-4 col-span-12">
+      <app-weekly-interests-chart [series]="serie_interesses()" />
+    </div>
+
+    <div class="xl:col-span-4 col-span-12">
+      <app-weekly-subscribers [series]="serie_inscricoes()" />
+    </div>
+
+    <div class="xl:col-span-4 col-span-12">
+      <app-weekly-registrations [series]="serie_matriculas()" />
+    </div>
     <!-- Conversao -->
     <div class="xl:col-span-4 col-span-12">
       <app-interest-to-subscribe-rate [series]="serie_interesse_vs_inscricao()" />
@@ -34,10 +45,6 @@
     </div>
 
     <!-- Interesse -->
-    <div class="xl:col-span-12 col-span-12">
-      <app-weekly-interests-chart [series]="serie_interesses()" />
-    </div>
-
     <div class="xl:col-span-8 col-span-12">
       <app-interests-ranking [items]="rank_interesse()" />
     </div>
@@ -47,10 +54,6 @@
     </div>
 
     <!-- Inscrição -->
-    <div class="xl:col-span-12 col-span-12">
-      <app-weekly-subscribers [series]="serie_inscricoes()" />
-    </div>
-
     <div class="xl:col-span-8 col-span-12">
       <app-subscribes-ranking [items]="rank_inscricao()" />
     </div>
@@ -60,10 +63,6 @@
     </div>
 
     <!-- Matrícula -->
-    <div class="xl:col-span-12 col-span-12">
-      <app-weekly-registrations [series]="serie_matriculas()" />
-    </div>
-
     <div class="xl:col-span-8 col-span-12">
       <app-registrations-ranking [items]="rank_matricula()" />
     </div>
