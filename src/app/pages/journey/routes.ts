@@ -6,8 +6,8 @@ export const children: Routes = [
     path: '',
     component: JourneyComponent,
     data: {
-      title: 'Jornadas',
-      urls: [{ title: 'Jornadas', url: '/jornadas' }],
+      // title: 'Jornadas',
+      // urls: [{ title: 'Jornadas', url: '/jornadas' }],
       boxed: false,
     },
   },
