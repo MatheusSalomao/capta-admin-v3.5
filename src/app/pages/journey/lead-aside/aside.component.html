@@ -5,7 +5,7 @@
   [class.w-72]="!asideCollapsed"
 >
   <header
-    class="flex h-12 min-h-12 items-center gap-2 border-b border-border px-2"
+    class="flex h-[3.07rem] min-h-[3.07rem] items-center gap-2 border-b border-border px-2"
     [class.justify-between]="!asideCollapsed"
     [class.justify-center]="asideCollapsed"
   >
@@ -79,7 +79,6 @@
             [name]="leadCollapsed ? 'chevron-down' : 'chevron-up'"
           ></i-tabler>
         </button>
-
         <button
           type="button"
           class="flex size-8 items-center justify-center rounded text-foreground/80 transition-colors hover:bg-muted"
@@ -259,6 +258,10 @@
                 <div class="flex items-baseline justify-between gap-2">
                   <span class="shrink-0 uppercase tracking-[0.12em]">Ingresso</span>
                   <span class="text-foreground text-right">{{ registration.formaIngresso || 'Não informado' }}</span>
+                </div>
+                <div class="flex items-baseline justify-between gap-2">
+                  <span class="shrink-0 uppercase tracking-[0.12em]">Situação</span>
+                  <span class="text-foreground text-right">{{ 'Pendente de Documentação' }}</span>
                 </div>
               </div>
             </button>

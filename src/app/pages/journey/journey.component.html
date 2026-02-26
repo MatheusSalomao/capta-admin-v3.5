@@ -1,8 +1,314 @@
 <div class="h-[calc(100vh-70px-48px)] min-h-0">
   <mat-card class="cardWithShadow h-full! mb-0! rounded-none!">
-    <mat-card-content class="flex p-0! h-full w-full overflow-hidden" aria-label="Jornadas">
+    <mat-card-content class="flex! flex-row! p-0! h-full w-full overflow-hidden" aria-label="Jornadas">
 
       <app-lead-aside />
+      <!-- Painel -->
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <mat-tab-group class="h-full! flex-1 flex flex-col">
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <i class="iconify size-6 mr-2" data-icon="solar:info-square-bold-duotone"></i>
+              Informações
+            </ng-template>
+
+            <div class="p-4">
+              <section class="flex min-h-0 flex-1 flex-col gap-6 p-6" aria-label="Detalhes da inscricao">
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-2 items-stretch">
+                  <article
+                    class="flex h-full w-full flex-col gap-4 rounded-xl border border-border p-6 shadow-(--shadow-sm)">
+                    <div class="flex flex-col gap-1">
+                      <div class="flex items-center gap-1 justify-between">
+                        <h2 class="text-sm font-semibold text-dark">{{ 'Medicina' }}</h2>
+                        <div class="flex gap-5 items-center">
+                          <i class="iconify flex text-error" data-icon="solar:forbidden-circle-outline"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <span class="h-7"></span>
+                    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                      <div class="flex flex-col gap-1">
+                        <span class="text-xs font-medium text-muted">Modalidade</span>
+                        <span class="text-sm text-dark">{{ 'Presencial' }}</span>
+                      </div>
+                      <div class="flex flex-col gap-1">
+                        <span class="text-xs font-medium text-muted">Turno</span>
+                        <span class="text-sm text-dark">{{ 'Vespertino / Noturno' }}</span>
+                      </div>
+                      <div class="flex flex-col gap-1">
+                        <span class="text-xs font-medium text-muted">Grau de Formação</span>
+                        <span class="text-sm text-dark">{{ 'Bacharelado' }}</span>
+                      </div>
+                      <div class="flex flex-col gap-1">
+                        <span class="text-xs font-medium text-muted">Data de Inscrição</span>
+                        <span
+                          class="text-sm text-dark">{{ '21/01/2026 14:30' }}</span>
+                      </div>
+                    </div>
+                  </article>
+                  <article
+                    class="flex h-full w-full flex-col gap-4 rounded-xl border border-border p-6 shadow-(--shadow-sm)">
+                    <div class="flex flex-col gap-1">
+                      <div class="flex items-center gap-1 justify-between">
+                        <h2 class="text-sm font-semibold text-dark">PraValer</h2>
+                        <div class="flex gap-5 items-center">
+                          <i class="iconify flex text-warning" data-icon="solar:dollar-minimalistic-line-duotone"></i>
+                          <i class="iconify flex text-primary" data-icon="solar:round-sort-horizontal-outline"></i>
+                        </div>
+                      </div>
+                      <!--              <h2 class="text-sm font-semibold text-dark">Oferta</h2>-->
+                      <span
+                        class="text-lg font-semibold text-dark">{{ 12675 / 2 }}</span>
+                    </div>
+                    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                      <div class="flex flex-col gap-1">
+                        <span class="text-xs font-medium text-muted">Taxa de Inscrição</span>
+                        <span class="text-sm text-dark">{{ 75 }}</span>
+                      </div>
+                      <div class="flex flex-col gap-1">
+                        <span class="text-xs font-medium text-muted">Valor da Matrícula</span>
+                        <span class="text-sm text-dark">{{ 49.90 }}</span>
+                      </div>
+                      <div class="flex flex-col gap-1">
+                        <span class="text-xs font-medium text-muted">Mensalidade Integral</span>
+                        <span class="text-sm text-dark">{{ 12675 }}</span>
+                      </div>
+                      <div class="flex flex-col gap-1">
+                        <span class="text-xs font-medium text-muted">Desconto</span>
+                        <span
+                          class="text-sm font-semibold text-dark">50%</span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+                <article
+                  class="flex flex-col gap-4 rounded-xl border border-border p-6 shadow-(--shadow-sm)">
+                  <div class="flex flex-col gap-1">
+                    <div class="flex items-center gap-1 justify-between">
+                      <h2 class="text-sm font-semibold text-dark">{{ 'VESTIBULAR ONLINE MEDICINA 2026/1' }}</h2>
+                    </div>
+                  </div>
+                  <span class="h-7"></span>
+                  <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                    <div class="flex flex-col gap-1">
+                      <span class="text-xs font-medium text-muted">Forma de Ingresso</span>
+                      <span class="text-sm text-dark">{{ 'Vestibular' }}</span>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                      <span class="text-xs font-medium text-muted">Período Letivo</span>
+                      <span class="text-sm text-dark">{{ '2026 - 1º Semestre' }}</span>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                      <span class="text-xs font-medium text-muted">Data Pré-matrícula</span>
+                      <span class="text-sm text-dark">{{ '10/03/2026 18:00' }}</span>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                      <span class="text-xs font-medium text-muted">Data Início das Aulas</span>
+                      <span class="text-sm text-dark">{{ '02/02/2026 18:00' }}</span>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                      <span class="text-xs font-medium text-muted">Campus</span>
+                      <span class="text-sm text-dark">Centro Universitário Uninorte</span>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                      <span class="text-xs font-medium text-muted">Modelo de Avaliação</span>
+                      <span class="text-sm text-dark">{{ 'MEDICINA 06/01/2026' }}</span>
+                    </div>
+
+                  </div>
+                </article>
+                <article
+                  class="flex flex-col gap-4 rounded-xl border border-border p-6 shadow-(--shadow-sm)">
+                  <div class="flex flex-col gap-1 mb-8.5">
+                    <div class="flex items-center gap-1 justify-between">
+                      <h2 class="text-sm font-semibold text-dark">{{ 'Observações' }}</h2>
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                    <div class="flex flex-col gap-1">
+                      <span class="flex-1 text-xs font-medium text-muted">Assinatura de contrato   Fulano de Tal   25/02/2026 </span>
+                      <span class="text-xs font-medium text-muted">Pré-Matrícula   CAPTA   25/02/2026 </span>
+                    </div>
+                  </div>
+                </article>
+              </section>
+              <!--              <section class="flex min-h-0 flex-1 flex-col gap-4 p-6" aria-label="Detalhes da inscricao">-->
+              <!--                <div class="grid grid-cols-1 gap-4 xl:grid-cols-2">-->
+              <!--                  <article-->
+              <!--                    class="flex flex-col gap-4 rounded-xl border border-border p-4 shadow-(&#45;&#45;shadow-sm)">-->
+              <!--                    <div class="flex flex-col gap-1">-->
+              <!--                      <div class="flex items-center gap-1 justify-between">-->
+              <!--                        <h2 class="text-sm font-semibold text-dark">{{ 'Medicina' }}</h2>-->
+              <!--                        <div class="flex gap-5 items-center">-->
+              <!--                          <i class="iconify flex text-error" data-icon="solar:forbidden-circle-outline"></i>-->
+              <!--                        </div>-->
+              <!--                      </div>-->
+              <!--                    </div>-->
+              <!--                    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">-->
+              <!--                      <div class="flex flex-col gap-1">-->
+              <!--                        <span class="text-xs font-medium text-muted">Modalidade</span>-->
+              <!--                        <span class="text-sm text-dark">{{ 'Presencial' }}</span>-->
+              <!--                      </div>-->
+              <!--                      <div class="flex flex-col gap-1">-->
+              <!--                        <span class="text-xs font-medium text-muted">Turno</span>-->
+              <!--                        <span class="text-sm text-dark">{{ 'Vespertino / Noturno' }}</span>-->
+              <!--                      </div>-->
+              <!--                      <div class="flex flex-col gap-1">-->
+              <!--                        <span class="text-xs font-medium text-muted">Grau de Formação</span>-->
+              <!--                        <span class="text-sm text-dark">{{ 'Bacharelado' }}</span>-->
+              <!--                      </div>-->
+              <!--                      <div class="flex flex-col gap-1">-->
+              <!--                        <span class="text-xs font-medium text-muted">Data de Inscrição</span>-->
+              <!--                        <span-->
+              <!--                          class="text-sm text-dark">{{ '21/01/2026 14:30' }}</span>-->
+              <!--                      </div>-->
+              <!--                    </div>-->
+              <!--                  </article>-->
+
+              <!--                  <article-->
+              <!--                    class="flex flex-col gap-4 rounded-xl border border-border p-4 shadow-(&#45;&#45;shadow-sm)">-->
+              <!--                    <div class="flex flex-col gap-1">-->
+              <!--                      <div class="flex items-center gap-1 justify-between">-->
+              <!--                        <h2 class="text-sm font-semibold text-dark">{{ '—' }}</h2>-->
+              <!--                        <i class="iconify flex text-primary" data-icon="solar:pen-new-square-line-duotone"></i>-->
+              <!--                      </div>-->
+              <!--                    </div>-->
+              <!--                    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">-->
+              <!--                      <div class="flex flex-col gap-1">-->
+              <!--                        <span class="text-xs font-medium text-muted">Documento</span>-->
+              <!--                        <span class="text-sm text-dark">{{ '—' }}</span>-->
+              <!--                      </div>-->
+              <!--                      <div class="flex flex-col gap-1">-->
+              <!--                        <span class="text-xs font-medium text-muted">Telefone</span>-->
+              <!--                        <span class="text-sm text-dark">{{ '(68) 99202-2020' }}</span>-->
+              <!--                      </div>-->
+              <!--                      <div class="flex flex-col gap-1">-->
+              <!--                        <span class="text-xs font-medium text-muted">Email</span>-->
+              <!--                        <span class="text-sm text-dark">{{ 'fulano@email.com' }}</span>-->
+              <!--                      </div>-->
+              <!--                    </div>-->
+              <!--                  </article>-->
+
+              <!--                  <article-->
+              <!--                    class="flex flex-col gap-4 rounded-xl border border-border p-4 shadow-(&#45;&#45;shadow-sm)">-->
+              <!--                    <div class="flex flex-col gap-1">-->
+              <!--                      <div class="flex items-center gap-1 justify-between">-->
+              <!--                        <h2 class="text-sm font-semibold text-dark">PraValer</h2>-->
+              <!--                        <div class="flex gap-5 items-center">-->
+              <!--                          <i class="iconify flex text-warning" data-icon="solar:dollar-minimalistic-line-duotone"></i>-->
+              <!--                          <i class="iconify flex text-primary" data-icon="solar:round-sort-horizontal-outline"></i>-->
+              <!--                        </div>-->
+              <!--                      </div>-->
+              <!--                      &lt;!&ndash;              <h2 class="text-sm font-semibold text-dark">Oferta</h2>&ndash;&gt;-->
+              <!--                      <p-->
+              <!--                        class="text-lg font-semibold text-dark">{{ 12675 / 2 }}</p>-->
+              <!--                    </div>-->
+              <!--                    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">-->
+              <!--                      <div class="flex flex-col gap-1">-->
+              <!--                        <span class="text-xs font-medium text-muted">Taxa de Inscrição</span>-->
+              <!--                        <span class="text-sm text-dark">{{ 75 }}</span>-->
+              <!--                      </div>-->
+              <!--                      <div class="flex flex-col gap-1">-->
+              <!--                        <span class="text-xs font-medium text-muted">Valor da Matrícula</span>-->
+              <!--                        <span class="text-sm text-dark">{{ 49.90 }}</span>-->
+              <!--                      </div>-->
+              <!--                      <div class="flex flex-col gap-1">-->
+              <!--                        <span class="text-xs font-medium text-muted">Mensalidade Integral</span>-->
+              <!--                        <span class="text-sm text-dark">{{ 12675 }}</span>-->
+              <!--                      </div>-->
+              <!--                      <div class="flex flex-col gap-1">-->
+              <!--                        <span class="text-xs font-medium text-muted">Desconto</span>-->
+              <!--                        <span-->
+              <!--                          class="text-sm font-semibold text-dark">50%</span>-->
+              <!--                      </div>-->
+              <!--                    </div>-->
+              <!--                  </article>-->
+
+              <!--                  <article-->
+              <!--                    class="flex flex-col gap-4 rounded-xl border border-border p-4 shadow-(&#45;&#45;shadow-sm)">-->
+              <!--                    <div class="flex flex-col gap-1 mb-16.5">-->
+              <!--                      <div class="flex items-center gap-1 justify-between">-->
+              <!--                        <h2 class="text-sm font-semibold text-dark">{{ 'VESTIBULAR ONLINE MEDICINA 2026/1' }}</h2>-->
+              <!--                      </div>-->
+              <!--                    </div>-->
+              <!--                    <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">-->
+              <!--                      <div class="flex flex-col gap-1">-->
+              <!--                        <span class="text-xs font-medium text-muted">Forma de Ingresso</span>-->
+              <!--                        <span class="text-sm text-dark">{{ 'Vestibular' }}</span>-->
+              <!--                      </div>-->
+              <!--                      <div class="flex flex-col gap-1">-->
+              <!--                        <span class="text-xs font-medium text-muted">Período Letivo</span>-->
+              <!--                        <span class="text-sm text-dark">{{ '2026 - 1º Semestre' }}</span>-->
+              <!--                      </div>-->
+              <!--                      <div class="flex flex-col gap-1">-->
+              <!--                        <span class="text-xs font-medium text-muted">Data Pré-matrícula</span>-->
+              <!--                        <span class="text-sm text-dark">{{ '10/03/2026 18:00' }}</span>-->
+              <!--                      </div>-->
+              <!--                      <div class="flex flex-col gap-1">-->
+              <!--                        <span class="text-xs font-medium text-muted">Data Início das Aulas</span>-->
+              <!--                        <span class="text-sm text-dark">{{ '02/02/2026 18:00' }}</span>-->
+              <!--                      </div>-->
+              <!--                      <div class="flex flex-col gap-1">-->
+              <!--                        <span class="text-xs font-medium text-muted">Campus</span>-->
+              <!--                        <span class="text-sm text-dark">Centro Universitário Uninorte</span>-->
+              <!--                      </div>-->
+              <!--                      <div class="flex flex-col gap-1">-->
+              <!--                        <span class="text-xs font-medium text-muted">Modelo de Avaliação</span>-->
+              <!--                        <span class="text-sm text-dark">{{ 'MEDICINA 06/01/2026' }}</span>-->
+              <!--                      </div>-->
+
+              <!--                    </div>-->
+              <!--                  </article>-->
+              <!--                </div>-->
+              <!--              </section>-->
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <i class="iconify size-6 mr-2" data-icon="solar:document-add-bold-duotone"></i>
+              Avaliações
+            </ng-template>
+            <div class="p-4">
+              <h2>Timeline</h2>
+              <p>Conteúdo da timeline aqui...</p>
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <i class="iconify size-6 mr-2" data-icon="solar:square-academic-cap-2-bold-duotone"></i>
+              Matrícula
+            </ng-template>
+            <div class="p-4">
+              <h2>Tarefas</h2>
+              <p>Conteúdo de tarefas aqui...</p>
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <i class="iconify size-6 mr-2" data-icon="solar:document-text-bold-duotone"></i>
+              Documentos
+            </ng-template>
+            <div class="p-4">
+              <h2>Tarefas</h2>
+              <p>Conteúdo de tarefas aqui...</p>
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <i class="iconify size-6 mr-2" data-icon="solar:diploma-verified-bold-duotone"></i>
+              Contratos
+            </ng-template>
+            <div class="p-4">
+              <h2>Tarefas</h2>
+              <p>Conteúdo de tarefas aqui...</p>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
 
     </mat-card-content>
   </mat-card>
