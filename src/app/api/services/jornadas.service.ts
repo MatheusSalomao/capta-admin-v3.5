@@ -5,6 +5,7 @@ import { buildHttpParams, endpoint } from '@app/api';
 import { LocalStorageService } from '@app/services/local-storage.service';
 import { MantidaJornadasGetResponse } from '@app/api/models/mantida.jornadas.get.response';
 import { MantidaJornadasGetParams } from '@app/api/models/mantida.jornadas.get.params';
+import { MantidaJornadasInscricaoGetResponse } from '@app/api/models/mantida.jornadas.inscricao.get.response';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,12 @@ export class JornadasService {
       {
         params: buildHttpParams(params),
       }
+    );
+  }
+
+  inscricao(id: number): Observable<MantidaJornadasInscricaoGetResponse> {
+    return this.http.get<MantidaJornadasInscricaoGetResponse>(
+      endpoint(`/mantidas/${this.storage.getUnidade()?.id}/jornadas/${id}/inscricao`)
     );
   }
 }
