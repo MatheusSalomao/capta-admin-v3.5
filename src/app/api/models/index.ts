@@ -4,6 +4,7 @@ export * from './mantida.dashboard.ranks.get.response';
 export * from './mantida.dashboard.segmentacoes.get.response';
 export * from './mantida.dashboard.series.get.response';
 export * from './mantida.jornadas.get.response';
+export * from './mantida.jornadas.inscricao.get.response';
 export * from './sessoes.canais.get.params';
 export * from './sessoes.canais.get.response';
 export * from './sessoes.perfil.get.response';

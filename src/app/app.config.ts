@@ -1,11 +1,11 @@
-import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
-import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ApplicationConfig, importProvidersFrom, LOCALE_ID, provideZoneChangeDetection } from '@angular/core';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { routes } from './app.routes';
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideClientHydration } from '@angular/platform-browser';
-import { ToastrModule } from 'ngx-toastr';
-import { provideToastr } from 'ngx-toastr';
+import { provideToastr, ToastrModule } from 'ngx-toastr';
+import localePt from '@angular/common/locales/pt';
 
 // icons
 import { TablerIconsModule } from 'angular-tabler-icons';
@@ -23,8 +23,11 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 // code view
 import { provideHighlightOptions } from 'ngx-highlightjs';
 import 'highlight.js/styles/atom-one-dark.min.css';
-import { ApiAuthInterceptor, API_BASE_URL } from './api';
+import { API_BASE_URL, ApiAuthInterceptor } from './api';
 import { environment } from '@/environments/environment';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(localePt);
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -42,6 +45,7 @@ export const appConfig: ApplicationConfig = {
     }),
     { provide: API_BASE_URL, useValue: environment.apiBaseUrl },
     { provide: HTTP_INTERCEPTORS, useClass: ApiAuthInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
     provideRouter(
       routes,
       withInMemoryScrolling({

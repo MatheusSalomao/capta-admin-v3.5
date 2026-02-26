@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, signal, computed } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, OnInit, Output, signal, computed } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TablerIconsModule } from 'angular-tabler-icons';
 import { catchError, debounceTime, distinctUntilChanged, of, startWith, Subject, switchMap, tap } from 'rxjs';
@@ -14,6 +14,8 @@ export class AsideComponent implements OnInit {
   private readonly jornadas = inject(JornadasService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly searchTerm$ = new Subject<string>();
+
+  @Output() registrationSelected = new EventEmitter<number | null>();
 
   asideCollapsed = false;
   leadCollapsed = false;
@@ -44,7 +46,10 @@ export class AsideComponent implements OnInit {
         const aggregated = this.aggregateJornadas(items);
         this.profiles.set(aggregated.leads);
         this.registrations.set(aggregated.registrations);
-        this.ensureSelectedLead();
+        const leadChanged = this.ensureSelectedLead();
+        if (leadChanged) {
+          this.ensureSelectedRegistration();
+        }
         this.isLoadingLeads.set(false);
       });
   }
@@ -70,16 +75,29 @@ export class AsideComponent implements OnInit {
   }
 
   onSearch(term: string): void {
-    this.searchTerm$.next(term.trim());
+    const trimmed = term.trim();
+    this.selectedLeadUid.set(null);
+    this.selectedRegistrationUid.set(null);
+    this.registrationSelected.emit(null);
+    if (!trimmed) {
+      this.profiles.set([]);
+      this.registrations.set([]);
+      this.isLoadingLeads.set(false);
+      return;
+    }
+    this.searchTerm$.next(trimmed);
   }
 
   selectLead(profile: LeadProfile): void {
     this.selectedLeadUid.set(profile.uid);
     this.selectedRegistrationUid.set(null);
+    this.registrationSelected.emit(null);
+    this.ensureSelectedRegistration();
   }
 
   selectRegistration(registration: RegistrationItem): void {
     this.selectedRegistrationUid.set(registration.uid);
+    this.registrationSelected.emit(registration.jornadaId);
   }
 
   getInitials(name: string): string {
@@ -116,6 +134,7 @@ export class AsideComponent implements OnInit {
         const leadId = item.lead?.id ?? 0;
         const curso = item.inscricao.curso;
         registrations.push({
+          jornadaId: item.id,
           id: item.inscricao.id,
           uid: item.inscricao.uid,
           code: item.inscricao.codigo ?? '',
@@ -140,16 +159,30 @@ export class AsideComponent implements OnInit {
     };
   }
 
-  private ensureSelectedLead(): void {
+  private ensureSelectedLead(): boolean {
     const leads = this.profiles();
     if (leads.length === 0) {
+      const hadLead = Boolean(this.selectedLeadUid());
       this.selectedLeadUid.set(null);
-      return;
+      return hadLead;
     }
-    const current = this.selectedLeadUid();
-    const stillExists = current && leads.some(lead => lead.uid === current);
-    if (!stillExists) {
-      this.selectedLeadUid.set(leads[0].uid);
+    if (leads.length === 1) {
+      const onlyLead = leads[0].uid;
+      const current = this.selectedLeadUid();
+      if (current !== onlyLead) {
+        this.selectedLeadUid.set(onlyLead);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private ensureSelectedRegistration(): void {
+    if (this.selectedRegistrationUid()) return;
+    const registrations = this.selectedRegistrations();
+    if (registrations.length === 1) {
+      this.selectedRegistrationUid.set(registrations[0].uid);
+      this.registrationSelected.emit(registrations[0].jornadaId);
     }
   }
 }
@@ -161,7 +194,8 @@ interface LeadProfile {
   cpf: string;
 }
 
-interface RegistrationItem {
+export interface RegistrationItem {
+  jornadaId: number;
   id: number;
   uid: string;
   code: string;
