@@ -1,0 +1,101 @@
+<header
+  class="flex h-12 min-h-12 items-center gap-2 border-b border-border px-2"
+  [class.justify-between]="!asideCollapsed"
+  [class.justify-center]="asideCollapsed"
+  (click)="toggleLeadCollapsed.emit()"
+>
+  <div class="flex items-center gap-2" [hidden]="asideCollapsed">
+    <span class="text-sm font-semibold text-foreground">Lead</span>
+  </div>
+  <div class="flex items-center gap-1">
+    <button
+      type="button"
+      class="flex size-8 items-center justify-center rounded text-foreground/80 transition-colors hover:bg-muted"
+      [attr.aria-label]="leadCollapsed ? 'Expandir painel de leads' : 'Recolher painel de leads'"
+      [attr.aria-expanded]="!leadCollapsed"
+      (click)="$event.stopPropagation(); toggleLeadCollapsed.emit()"
+      [hidden]="asideCollapsed"
+    >
+      <i-tabler
+        class="size-5! flex!"
+        [name]="'plus'"
+      ></i-tabler>
+    </button>
+    <button
+      type="button"
+      class="flex size-8 items-center justify-center rounded text-foreground/80 transition-colors hover:bg-muted"
+      [attr.aria-label]="leadCollapsed ? 'Expandir painel de leads' : 'Recolher painel de leads'"
+      [attr.aria-expanded]="!leadCollapsed"
+      (click)="$event.stopPropagation(); toggleLeadCollapsed.emit()"
+      [hidden]="asideCollapsed"
+    >
+      <i-tabler
+        class="size-5! flex!"
+        [name]="leadCollapsed ? 'chevron-down' : 'chevron-up'"
+      ></i-tabler>
+    </button>
+    <button
+      type="button"
+      class="flex size-8 items-center justify-center rounded text-foreground/80 transition-colors hover:bg-muted"
+      [attr.aria-label]="leadCollapsed ? 'Expandir painel de leads' : 'Recolher painel de leads'"
+      [attr.aria-expanded]="!leadCollapsed"
+      (click)="$event.stopPropagation(); toggleAsideCollapsed.emit('lead')"
+      [hidden]="!asideCollapsed"
+    >
+      <!--          <i-tabler class="size-5!" [name]="'user'"></i-tabler>-->
+      <i class="iconify flex size-5!" data-icon="solar:user-bold-duotone"></i>
+    </button>
+  </div>
+
+</header>
+
+<section class="flex-1 overflow-y-auto" [hidden]="leadCollapsed || asideCollapsed">
+  @if (isLoadingLeads) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  } @else {
+    <div
+      class="h-[max(var(--mat-progress-bar-track-height, 4px),var(--mat-progress-bar-active-indicator-height, 4px))]"></div>
+  }
+  <div class="flex flex-col gap-3 p-2">
+    @if (profiles.length === 0) {
+      <div
+        class="flex flex-col items-center justify-center rounded-lg border border-border/40 bg-muted/30 px-3 py-6 text-sm text-muted-foreground">
+        <span>Nenhum lead encontrado</span>
+        <span class="text-xs mt-1">Tente ajustar sua busca</span>
+      </div>
+    } @else {
+      @for (profile of profiles; track profile.uid) {
+        <button
+          type="button"
+          class="group relative w-full rounded-lg border border-border/60 bg-card p-3 text-left transition-all duration-150 hover:border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.99]"
+          [class.border-primary]="profile.uid === selectedLeadUid"
+          [class]="{ 'bg-primary/5': profile.uid === selectedLeadUid }"
+          [attr.aria-pressed]="profile.uid === selectedLeadUid"
+          (click)="selectLead.emit(profile)"
+        >
+          <div class="flex items-start justify-between gap-2">
+            <div class="min-w-0">
+              <div class="truncate text-[14px] font-semibold text-foreground">
+                {{ profile.name || 'Curso não informado' }}
+              </div>
+            </div>
+            <div class="absolute right-2 top-1 flex items-center" [hidden]="profile.uid !== selectedLeadUid">
+              <i-tabler class="size-4! text-primary" [name]="'check'"></i-tabler>
+            </div>
+          </div>
+
+          <div class="mt-2 space-y-1 text-[11px] text-muted-foreground">
+            <div class="flex items-baseline justify-between gap-2">
+              <span class="shrink-0 uppercase tracking-[0.12em]">CPF</span>
+              <span class="text-foreground text-right">{{ profile.cpf || 'Não informado' }}</span>
+            </div>
+            <div class="flex items-baseline justify-between gap-2 truncate">
+              <span class="shrink-0 uppercase tracking-[0.12em]">Telefone</span>
+              <span class="text-foreground text-right">{{ phone(profile.phone) || 'Não informado' }}</span>
+            </div>
+          </div>
+        </button>
+      }
+    }
+  </div>
+</section>

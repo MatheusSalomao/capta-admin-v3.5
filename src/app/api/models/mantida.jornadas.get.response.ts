@@ -22,6 +22,7 @@ interface Matricula extends Id {}
 interface Lead extends Id {
   nome: string;
   cpf: string;
+  telefone?: string;
 }
 
 export interface MantidaJornadasGetResponse extends Id {

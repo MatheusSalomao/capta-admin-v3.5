@@ -2,19 +2,22 @@ import { Component, computed, DestroyRef, EventEmitter, inject, OnInit, Output, 
 import { catchError, debounceTime, distinctUntilChanged, of, startWith, Subject, switchMap, tap } from 'rxjs';
 import { JornadasService, MantidaJornadasGetResponse } from '@app/api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TablerIconsModule } from 'angular-tabler-icons';
+import { AsideHeaderComponent } from '@app/pages/journey/aside/aside-header/aside-header.component';
+import { AsideLeadsComponent } from '@app/pages/journey/aside/aside-leads/aside-leads.component';
+import { AsideRegistrationsComponent } from '@app/pages/journey/aside/aside-registrations/aside-registrations.component';
+import { LeadProfile, RegistrationItem } from '@app/pages/journey/aside/aside.types';
 
 @Component({
   selector: 'journey-aside',
   templateUrl: './aside.component.html',
-  imports: [TablerIconsModule],
+  imports: [AsideHeaderComponent, AsideLeadsComponent, AsideRegistrationsComponent],
 })
 export class AsideComponent implements OnInit {
   @Output() registrationSelected = new EventEmitter<number | null>();
 
-  asideCollapsed = false;
-  leadCollapsed = false;
-  registrationCollapsed = false;
+  asideCollapsed = signal(false);
+  leadCollapsed = signal(false);
+  registrationCollapsed = signal(false);
 
   isLoadingLeads = signal(false);
   profiles = signal<LeadProfile[]>([]);
@@ -26,6 +29,20 @@ export class AsideComponent implements OnInit {
     const all = this.registrations();
     if (!selectedUid) return [];
     return all.filter(registration => registration.leadUid === selectedUid);
+  });
+
+  css_section_leads = computed(() => {
+    const s = new Set<string>();
+    s.add(this.leadCollapsed() ? 'h-12' : 'flex-1');
+    s.add(this.registrationCollapsed() ? 'max-h-full' : 'max-h-1/2');
+    return s;
+  });
+
+  css_section_registrations = computed(() => {
+    const s = new Set<string>();
+    s.add(this.registrationCollapsed() ? 'h-12' : 'flex-1');
+    s.add(this.leadCollapsed() ? 'max-h-full' : 'max-h-1/2');
+    return s;
   });
 
   private readonly jornadas = inject(JornadasService);
@@ -55,22 +72,22 @@ export class AsideComponent implements OnInit {
   }
 
   toggleLeadCollapsed(): void {
-    this.leadCollapsed = !this.leadCollapsed;
+    this.leadCollapsed.set(!this.leadCollapsed());
   }
 
   toggleRegistrationCollapsed(): void {
-    this.registrationCollapsed = !this.registrationCollapsed;
+    this.registrationCollapsed.set(!this.registrationCollapsed());
   }
 
   toggleAsideCollapsed(section?: string): void {
-    this.asideCollapsed = !this.asideCollapsed;
+    this.asideCollapsed.set(!this.asideCollapsed());
     if (section === 'lead') {
-      this.leadCollapsed = false;
+      this.leadCollapsed.set(false);
     } else if (section === 'registration') {
-      this.registrationCollapsed = false;
+      this.registrationCollapsed.set(false);
     } else {
-      this.leadCollapsed = this.asideCollapsed;
-      this.registrationCollapsed = this.asideCollapsed;
+      this.leadCollapsed.set(this.asideCollapsed());
+      this.registrationCollapsed.set(this.asideCollapsed());
     }
   }
 
@@ -100,14 +117,6 @@ export class AsideComponent implements OnInit {
     this.registrationSelected.emit(registration.jornadaId);
   }
 
-  getInitials(name: string): string {
-    const parts = name.trim().split(/\s+/);
-    if (!parts.length) return '';
-    const first = parts[0][0] ?? '';
-    const last = parts.length > 1 ? (parts[parts.length - 1][0] ?? '') : '';
-    return (first + last).toUpperCase();
-  }
-
   private aggregateJourneys(items: Array<MantidaJornadasGetResponse>): {
     leads: LeadProfile[];
     registrations: RegistrationItem[];
@@ -124,6 +133,7 @@ export class AsideComponent implements OnInit {
             uid: item.lead.uid,
             name: item.lead.nome ?? 'Lead sem nome',
             cpf: item.lead.cpf ?? '',
+            phone: item.lead.telefone ?? '',
           });
         }
       }
@@ -185,27 +195,4 @@ export class AsideComponent implements OnInit {
       this.registrationSelected.emit(registrations[0].jornadaId);
     }
   }
-}
-
-interface LeadProfile {
-  id: number;
-  uid: string;
-  name: string;
-  cpf: string;
-}
-
-export interface RegistrationItem {
-  jornadaId: number;
-  id: number;
-  uid: string;
-  code: string;
-  courseName: string;
-  modality: string;
-  shift: string;
-  degree: string;
-  condicao: string;
-  formaIngresso: string;
-  leadId: number;
-  leadUid: string;
-  leadName: string;
 }

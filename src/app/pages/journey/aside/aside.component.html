@@ -1,276 +1,44 @@
 <aside
   aria-label="Leads e Inscrições"
   class="flex h-full! flex-col border-r border-border bg-background transition-all duration-200"
-  [class.w-14]="asideCollapsed"
-  [class.w-72]="!asideCollapsed"
+  [class.w-14]="asideCollapsed()"
+  [class.w-72]="!asideCollapsed()"
 >
-  <header
-    class="flex h-[3.07rem] min-h-[3.07rem] items-center gap-1 border-b border-border"
-    [class.justify-between]="!asideCollapsed"
-    [class.justify-center]="asideCollapsed"
-  >
-    <section class="flex-1 px-2 py-2 pr-0 h-12.75 min-h-12.75" [hidden]="asideCollapsed">
-      <label class="flex items-center gap-2 rounded-md border-border bg-muted/30 px-2 py-1.5"
-             [class.border]="!asideCollapsed"
-             [class.justify-center]="asideCollapsed"
-      >
-        <input
-          #searchInput
-          type="search"
-          placeholder="cpf, nome, email ou inscrição"
-          class="w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
-          [hidden]="asideCollapsed"
-          (input)="onSearch(searchInput.value)"
-        />
-      </label>
-    </section>
-    <div
-      class="flex items-center h-full px-2"
-      [class.px-3]="asideCollapsed"
-      (click)="toggleAsideCollapsed()">
-      <i-tabler
-        class="size-5! flex!"
-        [name]="asideCollapsed ? 'chevron-right' : 'chevron-left'"
-        [attr.aria-label]="asideCollapsed ? 'Expandir painel lateral' : 'Recolher painel lateral'"
-        [attr.aria-expanded]="!asideCollapsed"
-      ></i-tabler>
-    </div>
-  </header>
+  <journey-aside-header
+    [asideCollapsed]="asideCollapsed()"
+    (search)="onSearch($event)"
+    (toggleAsideCollapsed)="toggleAsideCollapsed($event)"
+  ></journey-aside-header>
+
 
   <section
-    class="flex flex-col border-b border-border transition-all duration-200"
-    [class]="{
-      'h-12': leadCollapsed,
-      'flex-1': !leadCollapsed,
-      'max-h-1/2': !registrationCollapsed,
-      'max-h-full': registrationCollapsed,
-    }"
-  >
-    <header
-      class="flex h-12 min-h-12 items-center gap-2 border-b border-border px-2"
-      [class.justify-between]="!asideCollapsed"
-      [class.justify-center]="asideCollapsed"
-      (click)="toggleLeadCollapsed()"
-    >
-      <div class="flex items-center gap-2" [hidden]="asideCollapsed">
-        <span class="text-sm font-semibold text-foreground">Lead</span>
-      </div>
-      <div class="flex items-center gap-1">
-        <button
-          type="button"
-          class="flex size-8 items-center justify-center rounded text-foreground/80 transition-colors hover:bg-muted"
-          [attr.aria-label]="leadCollapsed ? 'Expandir painel de leads' : 'Recolher painel de leads'"
-          [attr.aria-expanded]="!leadCollapsed"
-          (click)="$event.stopPropagation(); toggleLeadCollapsed()"
-          [hidden]="asideCollapsed"
-        >
-          <i-tabler
-            class="size-5! flex!"
-            [name]="'plus'"
-          ></i-tabler>
-        </button>
-        <button
-          type="button"
-          class="flex size-8 items-center justify-center rounded text-foreground/80 transition-colors hover:bg-muted"
-          [attr.aria-label]="leadCollapsed ? 'Expandir painel de leads' : 'Recolher painel de leads'"
-          [attr.aria-expanded]="!leadCollapsed"
-          (click)="$event.stopPropagation(); toggleLeadCollapsed()"
-          [hidden]="asideCollapsed"
-        >
-          <i-tabler
-            class="size-5! flex!"
-            [name]="leadCollapsed ? 'chevron-down' : 'chevron-up'"
-          ></i-tabler>
-        </button>
-        <button
-          type="button"
-          class="flex size-8 items-center justify-center rounded text-foreground/80 transition-colors hover:bg-muted"
-          [attr.aria-label]="leadCollapsed ? 'Expandir painel de leads' : 'Recolher painel de leads'"
-          [attr.aria-expanded]="!leadCollapsed"
-          (click)="$event.stopPropagation(); toggleAsideCollapsed('lead')"
-          [hidden]="!asideCollapsed"
-        >
-          <!--          <i-tabler class="size-5!" [name]="'user'"></i-tabler>-->
-          <i class="iconify flex size-5!" data-icon="solar:user-bold-duotone"></i>
-        </button>
-      </div>
-
-    </header>
-
-    <section class="flex-1 overflow-y-auto py-3 overflow-x-hidden" [hidden]="leadCollapsed || asideCollapsed">
-      <div class="flex flex-col px-2" [class]="{'gap-y-2.5': !leadCollapsed}">
-        @if (isLoadingLeads()) {
-          <div
-            class="flex items-center justify-center rounded-lg border border-border/40 bg-muted/40 px-3 py-6 text-sm text-muted-foreground">
-            Carregando leads...
-          </div>
-        } @else if (profiles().length === 0) {
-          <div
-            class="flex flex-col items-center justify-center rounded-lg border border-border/40 bg-muted/30 px-3 py-6 text-sm text-muted-foreground">
-            <span>Nenhum lead encontrado</span>
-            <span class="text-xs mt-1">Tente ajustar sua busca</span>
-          </div>
-        } @else {
-          @for (profile of profiles(); track profile.uid) {
-            <div
-              class="group relative flex cursor-pointer items-center gap-3 rounded-lg px-2 py-2.5 transition-all duration-150 active:scale-[0.98] border border-border/40 min-h-20 max-h-20"
-              [class.border-primary]="profile.uid === selectedLeadUid()"
-              [class]="{ 'bg-primary/5': profile.uid === selectedLeadUid() }"
-              (click)="selectLead(profile)"
-            >
-              <div
-                class="flex size-10 shrink-0 items-center justify-center rounded-full bg-linear-to-br from-primary/10 to-primary/5 text-sm font-bold text-primary ring-2 ring-primary/20 transition-all duration-150 group-hover:ring-primary/30 group-hover:shadow-md"
-                aria-hidden="true"
-              >
-                {{ getInitials(profile.name) }}
-              </div>
-              <div id="dados" class="min-w-0 flex flex-col justify-center">
-                <span
-                  class="truncate text-sm font-semibold text-foreground group-hover:text-primary transition-colors">{{ profile.name }}</span>
-                <span class="text-xs text-muted-foreground/80 font-mono flex justify-start items-center gap-x-1.5"><i-tabler
-                  class="size-3! flex-inline"
-                  [name]="'id'"></i-tabler>
-                  {{ profile.cpf || 'CPF não informado' }}</span>
-
-              </div>
-              <div class="absolute right-2 top-2 flex items-center" [hidden]="profile.uid !== selectedLeadUid()">
-                <i-tabler class="size-3! text-primary" [name]="'check'"></i-tabler>
-              </div>
-            </div>
-          }
-        }
-      </div>
-    </section>
-  </section>
+    journey-aside-leads
+    class="flex flex-col transition-all duration-200 border-b border-border"
+    [class]="css_section_leads()"
+    [asideCollapsed]="asideCollapsed()"
+    [leadCollapsed]="leadCollapsed()"
+    [registrationCollapsed]="registrationCollapsed()"
+    [isLoadingLeads]="isLoadingLeads()"
+    [profiles]="profiles()"
+    [selectedLeadUid]="selectedLeadUid()"
+    (toggleLeadCollapsed)="toggleLeadCollapsed()"
+    (toggleAsideCollapsed)="toggleAsideCollapsed($event)"
+    (selectLead)="selectLead($event)"
+  ></section>
 
   <section
-    class="flex flex-col transition-all duration-200 max-h-1/2"
-    [class.h-12]="registrationCollapsed"
-    [class.flex-1]="!registrationCollapsed"
-    [class]="{
-      'h-12': registrationCollapsed,
-      'flex-1': !registrationCollapsed,
-      'max-h-1/2': !leadCollapsed,
-      'max-h-full': leadCollapsed,
-    }"
-  >
-    <header
-      class="flex h-12 min-h-12 items-center gap-2 border-b border-border px-2"
-      [class.justify-between]="!asideCollapsed"
-      [class.justify-center]="asideCollapsed"
-      (click)="asideCollapsed ? null : toggleRegistrationCollapsed()"
-    >
-      <div class="flex items-center gap-2" [hidden]="asideCollapsed">
-        <span class="text-sm font-semibold text-foreground">Inscrições</span>
-      </div>
-      <div class="flex items-center gap-1">
-        <button
-          type="button"
-          class="flex size-8 items-center justify-center rounded text-foreground/80 transition-colors hover:bg-muted"
-          [attr.aria-label]="registrationCollapsed ? 'Expandir painel de inscrição' : 'Recolher painel de inscrição'"
-          [attr.aria-expanded]="!registrationCollapsed"
-          (click)="$event.stopPropagation(); toggleRegistrationCollapsed()"
-          [hidden]="asideCollapsed"
-        >
-          <i-tabler
-            class="size-5! flex!"
-            [name]="'plus'"
-          ></i-tabler>
-        </button>
-        <button
-          type="button"
-          class="flex size-8 items-center justify-center rounded text-foreground/80 transition-colors hover:bg-muted"
-          [attr.aria-label]="registrationCollapsed ? 'Expandir painel de inscrição' : 'Recolher painel de inscrição'"
-          [attr.aria-expanded]="!registrationCollapsed"
-          (click)="$event.stopPropagation(); toggleRegistrationCollapsed()"
-          [hidden]="asideCollapsed"
-        >
-          <i-tabler
-            class="size-5! flex!"
-            [name]="registrationCollapsed ? 'chevron-down' : 'chevron-up'"
-          ></i-tabler>
-        </button>
-        <button
-          type="button"
-          class="flex size-8 items-center justify-center rounded text-foreground/80 transition-colors hover:bg-muted"
-          [attr.aria-label]="leadCollapsed ? 'Expandir painel de leads' : 'Recolher painel de leads'"
-          [attr.aria-expanded]="!leadCollapsed"
-          (click)="$event.stopPropagation(); toggleAsideCollapsed('registration')"
-          [hidden]="!asideCollapsed"
-        >
-          <!--          <i-tabler class="size-5!" [name]="'school'"></i-tabler>-->
-          <i class="iconify flex size-5!" data-icon="solar:square-academic-cap-bold-duotone"></i>
-        </button>
-      </div>
-    </header>
-
-    <section class="flex-1 overflow-y-auto px-2 py-3" [hidden]="registrationCollapsed || asideCollapsed">
-      <div class="flex flex-col gap-3">
-        @if (isLoadingLeads()) {
-          <div
-            class="flex items-center justify-center rounded-lg border border-border/40 bg-muted/40 px-3 py-6 text-sm text-muted-foreground">
-            Carregando inscrições...
-          </div>
-        } @else if (!selectedLeadUid()) {
-          <div
-            class="flex flex-col items-center justify-center rounded-lg border border-border/40 bg-muted/30 px-3 py-6 text-sm text-muted-foreground">
-            <span>Selecione um lead</span>
-            <span class="text-xs mt-1">As inscrições serão exibidas aqui</span>
-          </div>
-        } @else if (selectedRegistrations().length === 0) {
-          <div
-            class="flex flex-col items-center justify-center rounded-lg border border-border/40 bg-muted/30 px-3 py-6 text-sm text-muted-foreground">
-            <span>Nenhuma inscrição encontrada</span>
-            <span class="text-xs mt-1">Tente ajustar sua busca</span>
-          </div>
-        } @else {
-          @for (registration of selectedRegistrations(); track registration.uid) {
-            <button
-              type="button"
-              class="group relative w-full rounded-lg border border-border/60 bg-card p-3 text-left transition-all duration-150 hover:border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.99]"
-              [class.border-primary]="registration.uid === selectedRegistrationUid()"
-              [class]="{ 'bg-primary/5': registration.uid === selectedRegistrationUid() }"
-              [attr.aria-pressed]="registration.uid === selectedRegistrationUid()"
-              (click)="selectRegistration(registration)"
-            >
-              <div class="flex items-start justify-between gap-2">
-                <div class="min-w-0">
-                  <div class="truncate text-[13px] font-semibold text-foreground">
-                    {{ registration.courseName || 'Curso não informado' }}
-                  </div>
-                </div>
-                <div
-                  class="shrink-0 rounded-md border border-border/60 px-2 py-0.5 text-[11px] font-mono text-muted-foreground transition-colors"
-                  [class.border-primary]="registration.uid === selectedRegistrationUid()"
-                  [class]="{ 'bg-primary/10': registration.uid === selectedRegistrationUid() }"
-                  [class.text-primary]="registration.uid === selectedRegistrationUid()"
-                >
-                  {{ registration.code || 'SEM CÓDIGO' }}
-                </div>
-              </div>
-
-              <div class="mt-2 space-y-1 text-[11px] text-muted-foreground">
-                <div class="flex items-baseline justify-between gap-2">
-                  <span class="shrink-0 uppercase tracking-[0.12em]">Modalidade</span>
-                  <span class="text-foreground text-right">{{ registration.modality || 'Não informado' }}</span>
-                </div>
-                <div class="flex items-baseline justify-between gap-2">
-                  <span class="shrink-0 uppercase tracking-[0.12em]">Turno</span>
-                  <span class="text-foreground text-right">{{ registration.shift || 'Não informado' }}</span>
-                </div>
-                <div class="flex items-baseline justify-between gap-2">
-                  <span class="shrink-0 uppercase tracking-[0.12em]">Ingresso</span>
-                  <span class="text-foreground text-right">{{ registration.formaIngresso || 'Não informado' }}</span>
-                </div>
-                <div class="flex items-baseline justify-between gap-2">
-                  <span class="shrink-0 uppercase tracking-[0.12em]">Situação</span>
-                  <span class="text-foreground text-right">{{ 'Pendente de Documentação' }}</span>
-                </div>
-              </div>
-            </button>
-          }
-        }
-      </div>
-    </section>
-  </section>
+    journey-aside-registrations
+    class="flex flex-col transition-all duration-200"
+    [class]="css_section_registrations()"
+    [asideCollapsed]="asideCollapsed()"
+    [registrationCollapsed]="registrationCollapsed()"
+    [leadCollapsed]="leadCollapsed()"
+    [isLoadingLeads]="isLoadingLeads()"
+    [selectedLeadUid]="selectedLeadUid()"
+    [selectedRegistrations]="selectedRegistrations()"
+    [selectedRegistrationUid]="selectedRegistrationUid()"
+    (toggleRegistrationCollapsed)="toggleRegistrationCollapsed()"
+    (toggleAsideCollapsed)="toggleAsideCollapsed($event)"
+    (selectRegistration)="selectRegistration($event)"
+  ></section>
 </aside>

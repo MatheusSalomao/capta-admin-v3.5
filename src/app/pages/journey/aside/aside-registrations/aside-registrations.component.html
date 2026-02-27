@@ -1,0 +1,119 @@
+<header
+  class="flex h-12 min-h-12 items-center gap-2 border-b border-border px-2"
+  [class.justify-between]="!asideCollapsed"
+  [class.justify-center]="asideCollapsed"
+  (click)="asideCollapsed ? null : toggleRegistrationCollapsed.emit()"
+>
+  <div class="flex items-center gap-2" [hidden]="asideCollapsed">
+    <span class="text-sm font-semibold text-foreground">Inscrições</span>
+  </div>
+  <div class="flex items-center gap-1">
+    <button
+      type="button"
+      class="flex size-8 items-center justify-center rounded text-foreground/80 transition-colors hover:bg-muted"
+      [attr.aria-label]="registrationCollapsed ? 'Expandir painel de inscrição' : 'Recolher painel de inscrição'"
+      [attr.aria-expanded]="!registrationCollapsed"
+      (click)="$event.stopPropagation(); toggleRegistrationCollapsed.emit()"
+      [hidden]="asideCollapsed"
+    >
+      <i-tabler
+        class="size-5! flex!"
+        [name]="'plus'"
+      ></i-tabler>
+    </button>
+    <button
+      type="button"
+      class="flex size-8 items-center justify-center rounded text-foreground/80 transition-colors hover:bg-muted"
+      [attr.aria-label]="registrationCollapsed ? 'Expandir painel de inscrição' : 'Recolher painel de inscrição'"
+      [attr.aria-expanded]="!registrationCollapsed"
+      (click)="$event.stopPropagation(); toggleRegistrationCollapsed.emit()"
+      [hidden]="asideCollapsed"
+    >
+      <i-tabler
+        class="size-5! flex!"
+        [name]="registrationCollapsed ? 'chevron-down' : 'chevron-up'"
+      ></i-tabler>
+    </button>
+    <button
+      type="button"
+      class="flex size-8 items-center justify-center rounded text-foreground/80 transition-colors hover:bg-muted"
+      [attr.aria-label]="leadCollapsed ? 'Expandir painel de leads' : 'Recolher painel de leads'"
+      [attr.aria-expanded]="!leadCollapsed"
+      (click)="$event.stopPropagation(); toggleAsideCollapsed.emit('registration')"
+      [hidden]="!asideCollapsed"
+    >
+      <!--          <i-tabler class="size-5!" [name]="'school'"></i-tabler>-->
+      <i class="iconify flex size-5!" data-icon="solar:square-academic-cap-bold-duotone"></i>
+    </button>
+  </div>
+</header>
+
+<section class="flex-1 overflow-y-auto" [hidden]="registrationCollapsed || asideCollapsed">
+  @if (isLoadingLeads) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  } @else {
+    <div
+      class="pt-1 h-[max(var(--mat-progress-bar-track-height, 4px),var(--mat-progress-bar-active-indicator-height, 4px))]"></div>
+  }
+  <div class="flex flex-col gap-3 p-2">
+    @if (!selectedLeadUid) {
+      <div
+        class="flex flex-col items-center justify-center rounded-lg border border-border/40 bg-muted/30 px-3 py-6 text-sm text-muted-foreground">
+        <span>Selecione um lead</span>
+        <span class="text-xs mt-1">As inscrições serão exibidas aqui</span>
+      </div>
+    } @else if (selectedRegistrations.length === 0) {
+      <div
+        class="flex flex-col items-center justify-center rounded-lg border border-border/40 bg-muted/30 px-3 py-6 text-sm text-muted-foreground">
+        <span>Nenhuma inscrição encontrada</span>
+        <span class="text-xs mt-1">Tente ajustar sua busca</span>
+      </div>
+    } @else {
+      @for (registration of selectedRegistrations; track registration.uid) {
+        <button
+          type="button"
+          class="group relative w-full rounded-lg border border-border/60 bg-card p-3 text-left transition-all duration-150 hover:border-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.99]"
+          [class.border-primary]="registration.uid === selectedRegistrationUid"
+          [class]="{ 'bg-primary/5': registration.uid === selectedRegistrationUid }"
+          [attr.aria-pressed]="registration.uid === selectedRegistrationUid"
+          (click)="selectRegistration.emit(registration)"
+        >
+          <div class="flex items-start justify-between gap-2">
+            <div class="min-w-0">
+              <div class="truncate text-[13px] font-semibold text-foreground">
+                {{ registration.courseName || 'Curso não informado' }}
+              </div>
+            </div>
+            <div
+              class="shrink-0 rounded-md border border-border/60 px-2 text-[0.688rem] font-mono text-muted-foreground transition-colors"
+              [class.border-primary]="registration.uid === selectedRegistrationUid"
+              [class.text-primary]="registration.uid === selectedRegistrationUid"
+              [class]="{ 'bg-primary/10': registration.uid === selectedRegistrationUid }"
+            >
+              {{ `${registration.code}`.padStart(4, '0') || 'SEM CÓDIGO' }}
+            </div>
+          </div>
+
+          <div class="mt-2 space-y-1 text-[11px] text-muted-foreground">
+            <div class="flex items-baseline justify-between gap-2">
+              <span class="shrink-0 uppercase tracking-[0.12em]">Modalidade</span>
+              <span class="text-foreground text-right">{{ registration.modality || 'Não informado' }}</span>
+            </div>
+            <div class="flex items-baseline justify-between gap-2">
+              <span class="shrink-0 uppercase tracking-[0.12em]">Turno</span>
+              <span class="text-foreground text-right">{{ registration.shift || 'Não informado' }}</span>
+            </div>
+            <div class="flex items-baseline justify-between gap-2">
+              <span class="shrink-0 uppercase tracking-[0.12em]">Ingresso</span>
+              <span class="text-foreground text-right">{{ registration.formaIngresso || 'Não informado' }}</span>
+            </div>
+            <div class="flex items-baseline justify-between gap-2">
+              <span class="shrink-0 uppercase tracking-[0.12em]">Situação</span>
+              <span class="text-foreground text-right">{{ 'Pendente de Documentação' }}</span>
+            </div>
+          </div>
+        </button>
+      }
+    }
+  </div>
+</section>
