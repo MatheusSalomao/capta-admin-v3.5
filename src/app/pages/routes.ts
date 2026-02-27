@@ -12,6 +12,6 @@ export const children: Routes = [
   },
   {
     path: 'jornadas',
-    loadChildren: () => import('./journey/routes').then(r => r.children),
+    loadChildren: () => import('@app/pages/journey/routes').then(r => r.children),
   },
 ];

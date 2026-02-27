@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, LOCALE_ID, signal } from '@angular/core';
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { MatCard, MatCardContent } from '@angular/material/card';
-import { AsideComponent } from '@app/pages/journey/lead-aside/aside.component';
+import { AsideComponent } from '@app/pages/journey/aside/aside.component';
 import { MatTab, MatTabGroup, MatTabLabel } from '@angular/material/tabs';
 import { MatIcon } from '@angular/material/icon';
 import { JornadasService, MantidaJornadasInscricaoGetResponse } from '@app/api';

@@ -1,15 +1,15 @@
 <aside
-  aria-label="Leads e Inscrição"
+  aria-label="Leads e Inscrições"
   class="flex h-full! flex-col border-r border-border bg-background transition-all duration-200"
   [class.w-14]="asideCollapsed"
   [class.w-72]="!asideCollapsed"
 >
   <header
-    class="flex h-[3.07rem] min-h-[3.07rem] items-center gap-2 border-b border-border px-2"
+    class="flex h-[3.07rem] min-h-[3.07rem] items-center gap-1 border-b border-border"
     [class.justify-between]="!asideCollapsed"
     [class.justify-center]="asideCollapsed"
   >
-    <section class="flex-1 px-2 py-2 h-12.75 min-h-12.75" [hidden]="asideCollapsed">
+    <section class="flex-1 px-2 py-2 pr-0 h-12.75 min-h-12.75" [hidden]="asideCollapsed">
       <label class="flex items-center gap-2 rounded-md border-border bg-muted/30 px-2 py-1.5"
              [class.border]="!asideCollapsed"
              [class.justify-center]="asideCollapsed"
@@ -17,21 +17,24 @@
         <input
           #searchInput
           type="search"
-          placeholder="CPF, nome email ou inscrição"
+          placeholder="cpf, nome, email ou inscrição"
           class="w-full bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
           [hidden]="asideCollapsed"
           (input)="onSearch(searchInput.value)"
         />
       </label>
     </section>
-
-    <i-tabler
-      class="size-5! flex!"
-      [name]="asideCollapsed ? 'chevron-right' : 'chevron-left'"
-      [attr.aria-label]="asideCollapsed ? 'Expandir painel lateral' : 'Recolher painel lateral'"
-      [attr.aria-expanded]="!asideCollapsed"
-      (click)="toggleAsideCollapsed()"
-    ></i-tabler>
+    <div
+      class="flex items-center h-full px-2"
+      [class.px-3]="asideCollapsed"
+      (click)="toggleAsideCollapsed()">
+      <i-tabler
+        class="size-5! flex!"
+        [name]="asideCollapsed ? 'chevron-right' : 'chevron-left'"
+        [attr.aria-label]="asideCollapsed ? 'Expandir painel lateral' : 'Recolher painel lateral'"
+        [attr.aria-expanded]="!asideCollapsed"
+      ></i-tabler>
+    </div>
   </header>
 
   <section
@@ -50,7 +53,7 @@
       (click)="toggleLeadCollapsed()"
     >
       <div class="flex items-center gap-2" [hidden]="asideCollapsed">
-        <span class="text-sm font-semibold text-foreground">Leads</span>
+        <span class="text-sm font-semibold text-foreground">Lead</span>
       </div>
       <div class="flex items-center gap-1">
         <button
@@ -87,7 +90,7 @@
           (click)="$event.stopPropagation(); toggleAsideCollapsed('lead')"
           [hidden]="!asideCollapsed"
         >
-<!--          <i-tabler class="size-5!" [name]="'user'"></i-tabler>-->
+          <!--          <i-tabler class="size-5!" [name]="'user'"></i-tabler>-->
           <i class="iconify flex size-5!" data-icon="solar:user-bold-duotone"></i>
         </button>
       </div>
@@ -195,7 +198,7 @@
           (click)="$event.stopPropagation(); toggleAsideCollapsed('registration')"
           [hidden]="!asideCollapsed"
         >
-<!--          <i-tabler class="size-5!" [name]="'school'"></i-tabler>-->
+          <!--          <i-tabler class="size-5!" [name]="'school'"></i-tabler>-->
           <i class="iconify flex size-5!" data-icon="solar:square-academic-cap-bold-duotone"></i>
         </button>
       </div>

@@ -1,25 +1,21 @@
-import { Component, DestroyRef, EventEmitter, inject, OnInit, Output, signal, computed } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TablerIconsModule } from 'angular-tabler-icons';
+import { Component, computed, DestroyRef, EventEmitter, inject, OnInit, Output, signal } from '@angular/core';
 import { catchError, debounceTime, distinctUntilChanged, of, startWith, Subject, switchMap, tap } from 'rxjs';
 import { JornadasService, MantidaJornadasGetResponse } from '@app/api';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TablerIconsModule } from 'angular-tabler-icons';
 
 @Component({
-  selector: 'app-lead-aside',
+  selector: 'journey-aside',
   templateUrl: './aside.component.html',
-  styleUrl: './aside.component.scss',
   imports: [TablerIconsModule],
 })
 export class AsideComponent implements OnInit {
-  private readonly jornadas = inject(JornadasService);
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly searchTerm$ = new Subject<string>();
-
   @Output() registrationSelected = new EventEmitter<number | null>();
 
   asideCollapsed = false;
   leadCollapsed = false;
   registrationCollapsed = false;
+
   isLoadingLeads = signal(false);
   profiles = signal<LeadProfile[]>([]);
   registrations = signal<RegistrationItem[]>([]);
@@ -32,6 +28,10 @@ export class AsideComponent implements OnInit {
     return all.filter(registration => registration.leadUid === selectedUid);
   });
 
+  private readonly jornadas = inject(JornadasService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly searchTerm$ = new Subject<string>();
+
   ngOnInit(): void {
     this.searchTerm$
       .pipe(
@@ -43,7 +43,7 @@ export class AsideComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(items => {
-        const aggregated = this.aggregateJornadas(items);
+        const aggregated = this.aggregateJourneys(items);
         this.profiles.set(aggregated.leads);
         this.registrations.set(aggregated.registrations);
         const leadChanged = this.ensureSelectedLead();
@@ -108,7 +108,7 @@ export class AsideComponent implements OnInit {
     return (first + last).toUpperCase();
   }
 
-  private aggregateJornadas(items: Array<MantidaJornadasGetResponse>): {
+  private aggregateJourneys(items: Array<MantidaJornadasGetResponse>): {
     leads: LeadProfile[];
     registrations: RegistrationItem[];
   } {
