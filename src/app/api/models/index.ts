@@ -14,3 +14,4 @@ export * from './sessoes.unidades.get.params';
 export * from './sessoes.unidades.get.response';
 export * from './types.enum';
 export * from './types.interface';
+export * from './ui.options.get.response';

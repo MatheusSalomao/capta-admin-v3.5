@@ -58,15 +58,16 @@
   <div class="flex flex-col gap-3 p-2">
     @if (!selectedLeadUid) {
       <div
-        class="flex flex-col items-center justify-center rounded-lg border border-border/40 bg-muted/30 px-3 py-6 text-sm text-muted-foreground">
+        class="flex flex-col items-center justify-center rounded-lg border-2 border-dotted border-border bg-muted/30 px-3 py-6 text-sm text-muted-foreground">
         <span>Selecione um lead</span>
-        <span class="text-xs mt-1">As inscrições serão exibidas aqui</span>
+        <span class="text-xs mt-1 text-muted">As inscrições serão exibidas aqui</span>
       </div>
     } @else if (selectedRegistrations.length === 0) {
       <div
-        class="flex flex-col items-center justify-center rounded-lg border border-border/40 bg-muted/30 px-3 py-6 text-sm text-muted-foreground">
+        class="flex flex-col items-center justify-center rounded-lg border-2 border-dotted border-border bg-muted/30 px-3 py-6 text-sm text-muted-foreground">
         <span>Nenhuma inscrição encontrada</span>
-        <span class="text-xs mt-1">Tente ajustar sua busca</span>
+        <span class="text-xs mt-1 text-muted">Tente ajustar sua busca</span>
+        {{ selectedRegistrations | json | slice:0:100}}
       </div>
     } @else {
       @for (registration of selectedRegistrations; track registration.uid) {

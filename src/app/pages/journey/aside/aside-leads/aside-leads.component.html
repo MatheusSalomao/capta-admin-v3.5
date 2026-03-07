@@ -59,9 +59,9 @@
   <div class="flex flex-col gap-3 p-2">
     @if (profiles.length === 0) {
       <div
-        class="flex flex-col items-center justify-center rounded-lg border border-border/40 bg-muted/30 px-3 py-6 text-sm text-muted-foreground">
+        class="flex flex-col items-center justify-center rounded-lg border-2 border-dotted border-border bg-muted/30 px-3 py-6 text-sm text-muted-foreground">
         <span>Nenhum lead encontrado</span>
-        <span class="text-xs mt-1">Tente ajustar sua busca</span>
+        <span class="text-xs mt-1 text-muted">Tente ajustar sua busca</span>
       </div>
     } @else {
       @for (profile of profiles; track profile.uid) {
@@ -79,7 +79,7 @@
                 {{ profile.name || 'Curso não informado' }}
               </div>
             </div>
-            <div class="absolute right-2 top-1 flex items-center" [hidden]="profile.uid !== selectedLeadUid">
+            <div class="absolute right-1 top-1 flex items-center" [hidden]="profile.uid !== selectedLeadUid">
               <i-tabler class="size-4! text-primary" [name]="'check'"></i-tabler>
             </div>
           </div>
@@ -91,7 +91,8 @@
             </div>
             <div class="flex items-baseline justify-between gap-2 truncate">
               <span class="shrink-0 uppercase tracking-[0.12em]">Telefone</span>
-              <span class="text-foreground text-right">{{ phone(profile.phone) || 'Não informado' }}</span>
+              <span class="text-foreground text-right">{{ (profile.phone | phone) || 'Não informado' }}</span>
+
             </div>
           </div>
         </button>

@@ -7,7 +7,7 @@ export interface LeadProfile {
 }
 
 export interface RegistrationItem {
-  jornadaId: number;
+  journeyId: number;
   id: number;
   uid: string;
   code: string;

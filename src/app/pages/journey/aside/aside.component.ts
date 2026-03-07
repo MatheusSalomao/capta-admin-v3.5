@@ -114,7 +114,7 @@ export class AsideComponent implements OnInit {
 
   selectRegistration(registration: RegistrationItem): void {
     this.selectedRegistrationUid.set(registration.uid);
-    this.registrationSelected.emit(registration.jornadaId);
+    this.registrationSelected.emit(registration.journeyId);
   }
 
   private aggregateJourneys(items: Array<MantidaJornadasGetResponse>): {
@@ -144,7 +144,7 @@ export class AsideComponent implements OnInit {
         const leadId = item.lead?.id ?? 0;
         const curso = item.inscricao.curso;
         registrations.push({
-          jornadaId: item.id,
+          journeyId: item.id,
           id: item.inscricao.id,
           uid: item.inscricao.uid,
           code: item.inscricao.codigo ?? '',
@@ -192,7 +192,7 @@ export class AsideComponent implements OnInit {
     const registrations = this.selectedRegistrations();
     if (registrations.length === 1) {
       this.selectedRegistrationUid.set(registrations[0].uid);
-      this.registrationSelected.emit(registrations[0].jornadaId);
+      this.registrationSelected.emit(registrations[0].journeyId);
     }
   }
 }

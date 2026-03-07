@@ -39,7 +39,7 @@ interface Bolsa extends Nome {
 interface OfertaCurso extends Id {
   uid: string;
   precificacao: Precificacao;
-  bolsa: Bolsa;
+  bolsa?: Bolsa;
   valor_inscricao: number;
   valor_primeira_mensalidade: number;
   percentual_desconto: number;
